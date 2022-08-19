@@ -2,35 +2,32 @@ const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
+const path = require("path");
 const cors = require("cors");
 const env = require("../env");
 
 const mainRoute = require("./routes/mainRoute");
-//const decodeRoute = require("./routes/decodeRoute");
+const songRoute = require("./routes/songRoute");
 const app = express();
 
 app.use(helmet());
 app.use(cors());
 app.options("*", cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
 
 // 設置session相關設定
-const mongoose = require("mongoose");
-const mStore = mongoose.createConnection(
-    env.sessionMongoUri,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }
-);
+const MongoStore = require("connect-mongo");
+const mStore = MongoStore.create({
+    mongoUrl: "mongodb://192.168.10.10:27017/Session"
+});
 app.use(session({
     secret: "Kuo",
     name: "sessionID",
-    resave: false,
-    rolling: true,
-    saveUninitialized: true,
     store: mStore,
     cookie: {
         secure: true,
@@ -40,7 +37,7 @@ app.use(session({
 }));
 
 app.use("/", mainRoute);
-//app.use("/decode", decodeRoute);
+app.use("/song", songRoute);
 
 // error handler
 const resModel = require("./models/resModel");
