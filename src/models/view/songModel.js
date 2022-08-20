@@ -36,7 +36,7 @@ const ytID = joi.string();
 const singerName = joi.string().required();
 const gender = joi.string().regex(/^(?:男|女|團體)$/).required();
 const songTitle = joi.string().required();
-const songLanguage = joi.string().regex(/^(?:華|英|日|韓)$/).required();
+const songLanguage = joi.string().regex(/^(?:華|台|英|日|韓)$/).required();
 const theme = joi.string();
 const year = joi.number().positive().required();
 const creatUser = joi.string();
@@ -47,6 +47,7 @@ const duration = joi.number().positive();
 const _id = joi.string().required();
 
 const paragraph = joi.string().regex(/^(?:intro|verse|chorus|bridge)$/).required();
+const fileFormat = joi.string().regex(/^(?:m4a|mp3)$/).required();
 
 // #endregion public joiSchema
 
@@ -93,7 +94,8 @@ const deleteSong = joi.object().keys({
 
 const readSampleSong = joi.object().keys({
     ytID: ytID.required(),
-    paragraph
+    paragraph,
+    fileFormat
 });
 
 const applyAddSong = joi.object().keys({

@@ -9,6 +9,7 @@ router.route("/")
   .delete(songController.deleteSong);
 
 router.route("/applyAddSong")
+  .get(songController.testView)
   .post(songController.applyAddSong);
 
 router.route("/sample")

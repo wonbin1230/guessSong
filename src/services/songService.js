@@ -32,8 +32,12 @@ module.exports.createSong = async function (body) {
     await splitSong(body.ytID, "intro", body.intro, filePath);
     await splitSong(body.ytID, "verse", body.verse, filePath);
     await splitSong(body.ytID, "chorus", body.chorus, filePath);
+    await splitSongMP3(body.ytID, "intro", body.intro, filePath);
+    await splitSongMP3(body.ytID, "verse", body.verse, filePath);
+    await splitSongMP3(body.ytID, "chorus", body.chorus, filePath);
     if (body.bridge) {
         await splitSong(body.ytID, "bridge", body.bridge, filePath);
+        await splitSongMP3(body.ytID, "bridge", body.bridge, filePath);
     }
     const res = body.ytID;
     return new resModel(res);
@@ -56,6 +60,29 @@ async function splitSong(ytID, key, time, filePath) {
             .save(newFilePath)
             .on("end", () => {
                 console.log(`${ytID} ${key} Split End`);
+                resolve();
+            });
+    });
+}
+
+async function splitSongMP3(ytID, key, time, filePath) {
+    const audioPath = path.join(__dirname, "../public/audio", ytID);
+    fs.mkdirSync(audioPath, { recursive: true });
+    const newFilePath = path.join(audioPath, `${key}.mp3`);
+
+    const begin = moment(`2022-01-01 00:${time.begin}`);
+    const end = moment(`2022-01-01 00:${time.end}`);
+    time.duration = end.diff(begin, "s");
+    splitService.addDuration(ytID, key, time);
+
+    return new Promise((resolve) => {
+        ffmpeg(filePath)
+            .seekInput(time.begin)
+            .duration(time.duration)
+            .audioCodec("libmp3lame")
+            .save(newFilePath)
+            .on("end", () => {
+                console.log(`${ytID} ${key} MP3 Split End`);
                 resolve();
             });
     });
