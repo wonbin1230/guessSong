@@ -66,7 +66,7 @@ module.exports.readSampleSong = async function (req, res, next) {
         if (!fs.existsSync(audioPath)) {
             throw new errModel(2, "此ytID資料夾不存在");
         }
-        const filePath = path.join(audioPath, `${req.query.paragraph}.m4a`);
+        const filePath = path.join(audioPath, `${req.query.paragraph}.${req.query.fileFormat}`);
 
         res.setHeader("Content-Type", "audio/mp4");
         fs.createReadStream(filePath).pipe(res);
@@ -83,6 +83,14 @@ module.exports.applyAddSong = async function (req, res, next) {
         }
         const resData = await songService.applyAddSong(req.body);
         res.json(resData);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.testView = async function (req, res, next) {
+    try {
+        res.render("test");
     } catch (err) {
         next(err);
     }

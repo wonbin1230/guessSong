@@ -20,15 +20,9 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
-// 設置session相關設定
-const MongoStore = require("connect-mongo");
-const mStore = MongoStore.create({
-    mongoUrl: "mongodb://192.168.10.10:27017/Session"
-});
 app.use(session({
-    secret: "Kuo",
+    secret: "guessSong",
     name: "sessionID",
-    store: mStore,
     cookie: {
         secure: true,
         httpOnly: true,
