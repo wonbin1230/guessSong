@@ -1,7 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const helmet = require("helmet");
+// const helmet = require("helmet");
 const path = require("path");
 const cors = require("cors");
 const env = require("../env");
@@ -10,7 +10,7 @@ const mainRoute = require("./routes/mainRoute");
 const songRoute = require("./routes/songRoute");
 const app = express();
 
-app.use(helmet());
+// app.use(helmet());
 app.use(cors());
 app.options("*", cors());
 app.use(express.json());
