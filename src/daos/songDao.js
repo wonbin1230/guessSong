@@ -1,10 +1,20 @@
 const mongoModel = require("../configs/mongoDB");
 const errModel = require("../models/errModel");
 
+module.exports.readAll = async function () {
+    return await mongoModel.Song.find();
+};
+
 module.exports.readSong = async function (songInfo) {
     return await mongoModel.Song.findOne({
         singerName: songInfo.singerName,
         songTitle: songInfo.songTitle
+    });
+};
+
+module.exports.readSongByytID = async function (ytID) {
+    return await mongoModel.Song.findOne({
+        ytID: ytID
     });
 };
 
