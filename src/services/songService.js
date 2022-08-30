@@ -40,10 +40,24 @@ module.exports.createSong = async function (body) {
     const params = reqUrl.searchParams;
     body.ytID = params.get("v");
 
-    const songInfoTmp = splitService.create(body);
+    let songInfoTmp = splitService.create(body);
     if (songInfoTmp) {
         return new resModel("已有相同歌曲列隊新增中");
     }
+
+    songInfoTmp = await songDao.readSongByytID(body.ytID);
+    if (songInfoTmp) {
+        return new resModel("資料庫中已有相同youtube連結", 98);
+    }
+
+    songInfoTmp = await songDao.readSong({
+        singerName: body.singerName,
+        songTitle: body.songTitle
+    });
+    if (songInfoTmp) {
+        return new resModel("資料庫中已有相同歌曲", 98);
+    }
+
     const info = await ytdl.getInfo(body.ytID);
     const filePath = ytdl.chooseFormat(info.formats, { quality: "140", filter: "audioonly" }).url;
     const paragraph = ["intro", "verse", "preChorus", "chorus", "bridge", "outro"];
@@ -138,12 +152,36 @@ module.exports.applyAddSong = async function (body) {
     }
     const audioPath = path.join(__dirname, "../public/audio", songInfo.ytID);
     const audioFolder = path.join(env.audioFolder, songInfo.ytID);
-    mv(audioPath, audioFolder, { mkdirp: true }, async (err) => {
-        if (err) {
-            console.log(err);
-            return new resModel("移動檔案時發生錯誤");
-        }
-        const res = await songDao.saveSong(songInfo);
-        return new resModel(res);
-    });
+    const mvFile = await moveSong(audioPath, audioFolder);
+    let res;
+    if (mvFile) {
+        res = mvFile;
+    } else {
+        res = await songDao.saveSong(songInfo);
+        splitService.delete(body.ytID);
+    }
+    // mv(audioPath, audioFolder, { mkdirp: true }, async (err) => {
+    //     if (err) {
+    //         console.log(err);
+    //         return new resModel("移動檔案時發生錯誤");
+    //     }
+    //     const res = await songDao.saveSong(songInfo);
+    //     splitService.delete(body.ytID);
+    //     return new resModel(res);
+    // });
+
+    return new resModel(res);
 };
+
+function moveSong(audioPath, audioFolder) {
+    return new Promise((resolve) => {
+        mv(audioPath, audioFolder, { mkdirp: true }, (err) => {
+            if (err) {
+                console.log(err);
+                resolve("移動檔案時發生錯誤");
+            } else {
+                resolve();
+            }
+        });
+    });
+}
