@@ -24,6 +24,14 @@
         justify-content: space-between;
         margin-left: 7px;
     }
+    .flexTime {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        height: 150px;
+        margin-left: 7px;
+    }
     .gridFlex {
         display: flex;
         justify-content: space-between;
@@ -36,6 +44,13 @@
         padding-bottom: 20px;
         border-bottom: 3px solid white;
     }
+    .redStar:after {
+        content: "＊";
+        color: red;
+    }
+    .areaColor, area {
+        background-color: rgb(226, 226, 226);
+    }
     button {
         width: 200px;
     }
@@ -45,7 +60,7 @@
     .myGrid {
         margin: 10px 0 0 10px;
         width: 1900px;
-        height: 590px;
+        height: 580px;
         color: black;
     }
     .text-center {
@@ -59,34 +74,39 @@
     <div class="wrap">
         <div class="row g-3 col-6">
             <div class="flex">
-                <div class="col-12 bb">
-                    <label for="ytLink" class="form-label">影片網址</label>
+                <div class="col-10 bb">
+                    <label for="ytLink" class="form-label redStar">影片網址</label>
                     <input type="text" class="form-control" id="ytLink" placeholder="https://www.youtube.com/watch?v=xE1jI6vShSQ">
                 </div>
+                <div class="col-10 bb">
+                    <label for="songTitle" class="form-label redStar">歌曲名稱</label>
+                    <input type="text" class="form-control" id="songTitle" placeholder="最偉大的作品">
+                </div>
                 <div class="col-8 bb">
-                    <label for="singerName" class="form-label">歌手名稱</label>
+                    <label for="theme" class="form-label">戲劇/電影</label>
+                    <input type="text" class="form-control" id="theme" placeholder="海洋天堂">
+                </div>
+                <div class="col-4 bb">
+                    <label for="singerName" class="form-label redStar">歌手名稱</label>
                     <input type="text" class="form-control" id="singerName" placeholder="周杰倫">
                 </div>
                 <div class="col-2 bb">
-                    <label for="gender" class="form-label">種類</label>
+                    <label for="gender" class="form-label redStar">種類</label>
                     <select id="gender" class="form-select">
                         <option>男</option>
                         <option>女</option>
+                        <option>團體</option>
                     </select>
                 </div>
-                <div class="col-12 bb">
-                    <label for="songTitle" class="form-label">歌曲名稱</label>
-                    <input type="text" class="form-control" id="songTitle" placeholder="最偉大的作品">
-                </div>
                 <div class="col-2 bb">
-                    <label for="songLanguage" class="form-label">歌曲語言</label>
+                    <label for="songLanguage" class="form-label redStar">語系</label>
                     <select id="songLanguage" class="form-select">
-                    <option>華語</option>
-                    <option>台語</option>
-                    <option>韓語</option>
-                    <option>英語</option>
-                    <option>日語</option>
-                    <option>粵語</option>
+                    <option>華</option>
+                    <option>台</option>
+                    <option>韓</option>
+                    <option>英</option>
+                    <option>日</option>
+                    <option>粵</option>
                     </select>
                 </div>
                 <!-- <div class="col-6 bb">
@@ -95,67 +115,65 @@
                 </div> -->
             </div>
 
-            <div class="flex">
+            <div class="flexTime">
                     <!-- 前奏 -->
                 <div class="col-6">
                     <label for="introStart" class="form-label">前奏開始時間</label>
-                    <input type="time" class="form-control col-6" id="introStart" placeholder="" value="00:00">
+                    <input type="time" class="form-control col-6 areaColor" id="introStart" placeholder="">
                 </div>
                 <div class="col-6">
                     <label for="introEnd" class="form-label">前奏結束時間</label>
-                    <input type="time" class="form-control col-6" id="introEnd" placeholder="" value="00:20">
+                    <input type="time" class="form-control col-6 areaColor" id="introEnd" placeholder="">
                 </div>
                 <!-- 主歌 -->
                 <div class="col-6">
-                    <label for="verseStart" class="form-label">主歌開始時間</label>
-                    <input type="time" class="form-control col-6" id="verseStart" placeholder="" value="00:21">
+                    <label for="verseStart" class="form-label redStar">主歌開始時間</label>
+                    <input type="time" class="form-control col-6" id="verseStart" placeholder="">
                 </div>
                 <div class="col-6">
-                    <label for="verseEnd" class="form-label">主歌結束時間</label>
-                    <input type="time" class="form-control col-6" id="verseEnd" placeholder="" value="00:50">
+                    <label for="verseEnd" class="form-label redStar">主歌結束時間</label>
+                    <input type="time" class="form-control col-6" id="verseEnd" placeholder="">
                 </div>
                 <!-- 導歌 -->
                 <div class="col-6">
                     <label for="preChorusStart" class="form-label">導歌開始時間</label>
-                    <input type="time" class="form-control col-6" id="preChorusStart" placeholder="" value="00:51">
+                    <input type="time" class="form-control col-6 areaColor" id="preChorusStart" placeholder="">
                 </div>
                 <div class="col-6">
                     <label for="preChorusEnd" class="form-label">導歌結束時間</label>
-                    <input type="time" class="form-control col-6" id="preChorusEnd" placeholder="" value="00:59">
+                    <input type="time" class="form-control col-6 areaColor" id="preChorusEnd" placeholder="">
                 </div>
-            </div>
-            <div class="flex">
                 <!-- 副歌 -->
                 <div class="col-6">
-                    <label for="chorusStart" class="form-label">副歌開始時間</label>
-                    <input type="time" class="form-control col-6" id="chorusStart" placeholder="" value="01:00">
+                    <label for="chorusStart" class="form-label redStar">副歌開始時間</label>
+                    <input type="time" class="form-control col-6" id="chorusStart" placeholder="">
                 </div>
                 <div class="col-6">
-                    <label for="chorusEnd" class="form-label">副歌結束時間</label>
-                    <input type="time" class="form-control col-6" id="chorusEnd" placeholder="" value="01:20">
+                    <label for="chorusEnd" class="form-label redStar">副歌結束時間</label>
+                    <input type="time" class="form-control col-6" id="chorusEnd" placeholder="">
                 </div>
                 <!-- 橋梁 -->
                 <div class="col-6">
                     <label for="bridgeStart" class="form-label">Bridge開始時間</label>
-                    <input type="time" class="form-control col-6" id="bridgeStart" placeholder="" value="02:30">
+                    <input type="time" class="form-control col-6 areaColor" id="bridgeStart" placeholder="">
                 </div>
                 <div class="col-6">
                     <label for="bridgeEnd" class="form-label">Bridge結束時間</label>
-                    <input type="time" class="form-control col-6" id="bridgeEnd" placeholder="" value="02:50">
+                    <input type="time" class="form-control col-6 areaColor" id="bridgeEnd" placeholder="">
                 </div>
                 <!-- 尾奏 -->
                 <div class="col-6">
                     <label for="outroStart" class="form-label">尾奏開始時間</label>
-                    <input type="time" class="form-control col-6" id="outroStart" placeholder="" value="03:20">
+                    <input type="time" class="form-control col-6" id="outroStart" placeholder="">
                 </div>
                 <div class="col-6">
                     <label for="outroEnd" class="form-label">尾奏結束時間</label>
-                    <input type="time" class="form-control col-6" id="outroEnd" placeholder="" value="03:40">
+                    <input type="time" class="form-control col-6" id="outroEnd" placeholder="">
                 </div>
             </div>
         </div>
         <div class="" style="text-align: right; margin-top: 10px;">
-            <button type="button" class="btn btn-primary" onclick="addSong()">新增</button>
+            <button type="button" class="btn btn-primary" onclick="createSong()">送出並試聽</button>
             <button type="reset" class="btn btn-danger">清除</button>
         </div>
         <!-- AngularJS Div-->
@@ -178,146 +196,149 @@
         $scope.lang = 'zh-tw';
         
         $scope.gridOptions = {
-        paginationPageSizes: [10, 25, 50, 75],
-        paginationPageSize: 15,
-        enableSorting: true, // 排序
-        enableFiltering: true, // 篩選
-        enableGridMenu: true, // Grid選單選項
-        enableColumnResizing: true, // 調整欄位大小
-        enablePinning: true, // 固定最左或最右
-        enableRowSelection: true, // Row能否被勾選
-        enableRowHeaderSelection: false, // 點Row就選整條
-        multiSelect: false, // 多選
-        noUnselect: true, // 能否不選
-        minimumColumnSize: 100, // 欄位最小寬度
-        data: [],
-        columnDefs: [
-            {
-                field: 'songTitle',
-                displayName: '歌曲名稱',
-                // pinnedLeft: true,
-                headerCellClass: 'text-center',
-                cellTemplate:
-                `<div class="ui-grid-cell-contents">
-                    <a href="{{row.entity.ytLink}}" target="_blank">{{COL_FIELD}}</a>
-                </div>`
-            },
-            {
-                field: 'theme',
-                displayName: '戲劇/電影',
-                headerCellClass: 'text-center'
-            },
-            {
-                field: 'singerName',
-                displayName: '歌手',
-                headerCellClass: 'text-center',
-                width: 120
-            },
-            {
-                field: 'gender',
-                displayName: '種類',
-                headerCellClass: 'text-center',
-                width: 85,
-                cellClass: 'text-center'
-            },
-            {
-                field: 'songLanguage',
-                displayName: '語系',
-                headerCellClass: 'text-center',
-                width: 85,
-                cellClass: 'text-center'
-            },
-            {
-                field: 'intro',
-                displayName: '前奏',
-                headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                `<div class="ui-grid-cell-contents gridFlex">
-                    <span style="color: green;">{{COL_FIELD.begin}}</span>
-                    <span style="color: red;">{{COL_FIELD.end}}</span>
-                </div>`
-            },
-            {
-                field: 'verse',
-                displayName: '主歌',
-                headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                `<div class="ui-grid-cell-contents gridFlex">
-                    <span style="color: green;">{{COL_FIELD.begin}}</span>
-                    <span style="color: red;">{{COL_FIELD.end}}</span>
-                </div>`
-            },
-            {
-                field: 'preChorus',
-                displayName: '導歌',
-                headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                `<div class="ui-grid-cell-contents gridFlex">
-                    <span style="color: green;">{{COL_FIELD.begin}}</span>
-                    <span style="color: red;">{{COL_FIELD.end}}</span>
-                </div>`
-            },
-            {
-                field: 'chorus',
-                displayName: '副歌',
-                headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                `<div class="ui-grid-cell-contents gridFlex">
-                    <span style="color: green;">{{COL_FIELD.begin}}</span>
-                    <span style="color: red;">{{COL_FIELD.end}}</span>
-                </div>`
-            },
-            {
-                field: 'bridge',
-                displayName: 'Bridge',
-                headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                `<div class="ui-grid-cell-contents gridFlex">
-                    <span style="color: green;">{{COL_FIELD.begin}}</span>
-                    <span style="color: red;">{{COL_FIELD.end}}</span>
-                </div>`
-            },
-            {
-                field: 'outro',
-                displayName: '尾奏',
-                headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                `<div class="ui-grid-cell-contents gridFlex">
-                    <span style="color: green;">{{COL_FIELD.begin}}</span>
-                    <span style="color: red;">{{COL_FIELD.end}}</span>
-                </div>`
-            },
-            // {
-            //     field: 'tradevoume',
-            //     displayName: '成交張數',
-            //     type: 'number',
-            //     cellFilter: 'number: 0',
-            //     filters: [{
-            //             condition: uiGridConstants.filter.GREATER_THAN,
-            //             placeholder: '最低'
-            //         },
-            //         {
-            //             condition: uiGridConstants.filter.LESS_THAN,
-            //             placeholder: '最高'
-            //         }
-            //     ]
-            // },
-            
-        ],
+            paginationPageSizes: [10, 25, 50, 75],
+            paginationPageSize: 15,
+            enableSorting: true, // 排序
+            enableFiltering: true, // 篩選
+            enableGridMenu: true, // Grid選單選項
+            enableColumnResizing: true, // 調整欄位大小
+            enablePinning: true, // 固定最左或最右
+            enableRowSelection: true, // Row能否被勾選
+            enableRowHeaderSelection: false, // 點Row就選整條
+            multiSelect: false, // 多選
+            noUnselect: true, // 能否不選
+            minimumColumnSize: 100, // 欄位最小寬度
+            data: [],
+            columnDefs: [
+                {
+                    field: 'songTitle',
+                    displayName: '歌曲名稱',
+                    // pinnedLeft: true,
+                    headerCellClass: 'text-center',
+                    cellTemplate:
+                    `<div class="ui-grid-cell-contents">
+                        <a href="{{row.entity.ytLink}}" target="_blank">{{COL_FIELD}}</a>
+                    </div>`
+                },
+                {
+                    field: 'theme',
+                    displayName: '戲劇/電影',
+                    headerCellClass: 'text-center'
+                },
+                {
+                    field: 'singerName',
+                    displayName: '歌手',
+                    headerCellClass: 'text-center',
+                    width: 120
+                },
+                {
+                    field: 'gender',
+                    displayName: '種類',
+                    headerCellClass: 'text-center',
+                    width: 85,
+                    cellClass: 'text-center'
+                },
+                {
+                    field: 'songLanguage',
+                    displayName: '語系',
+                    headerCellClass: 'text-center',
+                    width: 85,
+                    cellClass: 'text-center'
+                },
+                {
+                    field: 'intro',
+                    displayName: '前奏',
+                    headerCellClass: 'text-center',
+                    width: 150,
+                    cellTemplate:
+                    `<div class="ui-grid-cell-contents gridFlex">
+                        <span style="color: green;">{{COL_FIELD.begin}}</span>
+                        <span style="color: red;">{{COL_FIELD.end}}</span>
+                    </div>`
+                },
+                {
+                    field: 'verse',
+                    displayName: '主歌',
+                    headerCellClass: 'text-center',
+                    width: 150,
+                    cellTemplate:
+                    `<div class="ui-grid-cell-contents gridFlex">
+                        <span style="color: green;">{{COL_FIELD.begin}}</span>
+                        <span style="color: red;">{{COL_FIELD.end}}</span>
+                    </div>`
+                },
+                {
+                    field: 'preChorus',
+                    displayName: '導歌',
+                    headerCellClass: 'text-center',
+                    width: 150,
+                    cellTemplate:
+                    `<div class="ui-grid-cell-contents gridFlex">
+                        <span style="color: green;">{{COL_FIELD.begin}}</span>
+                        <span style="color: red;">{{COL_FIELD.end}}</span>
+                    </div>`
+                },
+                {
+                    field: 'chorus',
+                    displayName: '副歌',
+                    headerCellClass: 'text-center',
+                    width: 150,
+                    cellTemplate:
+                    `<div class="ui-grid-cell-contents gridFlex">
+                        <span style="color: green;">{{COL_FIELD.begin}}</span>
+                        <span style="color: red;">{{COL_FIELD.end}}</span>
+                    </div>`
+                },
+                {
+                    field: 'bridge',
+                    displayName: 'Bridge',
+                    headerCellClass: 'text-center',
+                    width: 150,
+                    cellTemplate:
+                    `<div class="ui-grid-cell-contents gridFlex">
+                        <span style="color: green;">{{COL_FIELD.begin}}</span>
+                        <span style="color: red;">{{COL_FIELD.end}}</span>
+                    </div>`
+                },
+                {
+                    field: 'outro',
+                    displayName: '尾奏',
+                    headerCellClass: 'text-center',
+                    width: 150,
+                    cellTemplate:
+                    `<div class="ui-grid-cell-contents gridFlex">
+                        <span style="color: green;">{{COL_FIELD.begin}}</span>
+                        <span style="color: red;">{{COL_FIELD.end}}</span>
+                    </div>`
+                },
+                // {
+                //     field: 'tradevoume',
+                //     displayName: '成交張數',
+                //     type: 'number',
+                //     cellFilter: 'number: 0',
+                //     filters: [{
+                //             condition: uiGridConstants.filter.GREATER_THAN,
+                //             placeholder: '最低'
+                //         },
+                //         {
+                //             condition: uiGridConstants.filter.LESS_THAN,
+                //             placeholder: '最高'
+                //         }
+                //     ]
+                // },
+                
+            ],
+                onRegisterApi: function(gridApi){ $scope.UIgridApi = gridApi;}
         };
         $scope.init = function () {
-            axios.get("/song").then(res => {
+            axios.get("http://192.168.10.20:3000/song").then(res => {
                 $scope.gridOptions.data = res.data.data;
+                $scope.UIgridApi.core.refresh(); // 重整Grid資料
                 console.log($scope.gridOptions.data);
             });
         };
     });
+
     // 取所有input及select的values
     function getVal() {
         const getVal = {};
@@ -341,50 +362,49 @@
         });
         return getVal;
     }
+
     // 檢查YT網址
     $("#ytLink").blur(async function() {
-        await axios.post("/song", {
+        if ($("#ytLink").val()) {
+            await axios.post("http://192.168.10.20:3000/song/read", {
             ytLink: $('#ytLink').val()
-        }).then(res => {
+            }).then(res => {
                 if (res.data.code != 0 && $('#ytLink').val()) {
                     return alert(res.data.msg)
                 }
         });
+        }
     });
+
     // 檢查歌手名稱+歌曲名稱
-    if ($("#singerName, #songTitle").val()) {
-        $("#singerName, #songTitle").blur(async function() {
-        await axios.get("/song/read", {
-            params: {
-                singerName: $("#singerName").val(),
-                songTitle: $("#songTitle").val()
-            }
-        }).then(res => {
-            console.log(res.data.msg);
-                if (res.data.code != 0 && $("#singerName, #songTitle").val()) {
-                    $("#singerName, #songTitle").val("")
-                    return alert(res.data.msg)
+    $("#singerName, #songTitle").blur(async function() {
+        if ($("#singerName").val() && $("#songTitle").val()) {
+            await axios.get("http://192.168.10.20:3000/song/read", {
+                params: {
+                    singerName: $("#singerName").val(),
+                    songTitle: $("#songTitle").val()
                 }
-        });
+            }).then(res => {
+                    if (res.data.code != 0 && $("#singerName, #songTitle").val()) {
+                        $("#singerName, #songTitle").val("")
+                        return alert(res.data.msg)
+                    }
+            });
+        }
     });
-    }
     
-    async function addSong() {
+    async function createSong() {
         let songVal = await getVal();
-        console.log("songVal: ",songVal);
-        const songPost = async (songVal) => {
-            return await axios.post(
-                "http://192.168.10.20:3000/song/read",
-                {
-                    songVal
-                },
-                {
-                headers: {
-                    "content-type": "application/json",
-                },
-                }
-            );
-        };
+        if (!songVal.ytLink || !songVal.songTitle || !songVal.singerName || !songVal.gender || !songVal.songLanguage || 
+            !songVal.verse || !songVal.chorus) {
+            return alert("有必填欄位沒填哦！")
+        } else {
+            await axios.post("http://192.168.10.20:3000/song",
+                songVal
+            ).then(res => {
+                console.log(res);
+            });
+        }
     };
 </script>
 <!-- <script src="../public/js/uiGrid.js" type="text/javascript"></script> -->

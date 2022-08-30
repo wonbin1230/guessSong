@@ -36,7 +36,7 @@ const ytID = joi.string();
 const singerName = joi.string().required();
 const gender = joi.string().regex(/^(?:男|女|團體)$/).required();
 const songTitle = joi.string().required();
-const songLanguage = joi.string().regex(/^(?:華|台|英|日|韓)$/).required();
+const songLanguage = joi.string().regex(/^(?:華|台|英|日|韓|粵)$/).required();
 const theme = joi.string();
 const year = joi.number().positive();
 const creatUser = joi.string();
@@ -66,7 +66,7 @@ const createSong = joi.object().keys({
     songLanguage,
     theme,
     year,
-    intro: songTime.required(),
+    intro: songTime,
     verse: songTime.required(),
     preChorus: songTime,
     chorus: songTime.required(),
