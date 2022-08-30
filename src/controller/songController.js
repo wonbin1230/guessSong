@@ -17,6 +17,15 @@ module.exports.createSong = async function (req, res, next) {
     }
 };
 
+module.exports.readAll = async function (req, res, next) {
+    try {
+        const resData = await songService.readAll();
+        res.json(resData);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports.readSong = async function (req, res, next) {
     try {
         const { error: joiErr } = songModel.readSong.validate(req.query);
@@ -24,6 +33,19 @@ module.exports.readSong = async function (req, res, next) {
             throw new errModel(1, joiErr.message);
         }
         const resData = await songService.readSong(req.query);
+        res.json(resData);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.readSongByytID = async function (req, res, next) {
+    try {
+        const { error: joiErr } = songModel.readSongByytID.validate(req.body);
+        if (joiErr) {
+            throw new errModel(1, joiErr.message);
+        }
+        const resData = await songService.readSongByytID(req.body);
         res.json(resData);
     } catch (err) {
         next(err);
@@ -56,6 +78,19 @@ module.exports.deleteSong = async function (req, res, next) {
     }
 };
 
+module.exports.applyAddSong = async function (req, res, next) {
+    try {
+        const { error: joiErr } = songModel.applyAddSong.validate(req.body);
+        if (joiErr) {
+            throw new errModel(1, joiErr.message);
+        }
+        const resData = await songService.applyAddSong(req.body);
+        res.json(resData);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports.readSampleSong = async function (req, res, next) {
     try {
         const { error: joiErr } = songModel.readSampleSong.validate(req.query);
@@ -70,27 +105,6 @@ module.exports.readSampleSong = async function (req, res, next) {
 
         res.setHeader("Content-Type", "audio/mp4");
         fs.createReadStream(filePath).pipe(res);
-    } catch (err) {
-        next(err);
-    }
-};
-
-module.exports.applyAddSong = async function (req, res, next) {
-    try {
-        const { error: joiErr } = songModel.applyAddSong.validate(req.body);
-        if (joiErr) {
-            throw new errModel(1, joiErr.message);
-        }
-        const resData = await songService.applyAddSong(req.body);
-        res.json(resData);
-    } catch (err) {
-        next(err);
-    }
-};
-
-module.exports.testView = async function (req, res, next) {
-    try {
-        res.render("test");
     } catch (err) {
         next(err);
     }

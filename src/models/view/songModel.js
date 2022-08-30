@@ -38,7 +38,7 @@ const gender = joi.string().regex(/^(?:男|女|團體)$/).required();
 const songTitle = joi.string().required();
 const songLanguage = joi.string().regex(/^(?:華|台|英|日|韓)$/).required();
 const theme = joi.string();
-const year = joi.number().positive().required();
+const year = joi.number().positive();
 const creatUser = joi.string();
 
 const timeJoi = joi.string().regex(/^([0-5][0-9]):([0-5][0-9])(.([0-9][0-9]?[0-9]?))?$/).required();
@@ -46,7 +46,7 @@ const duration = joi.number().positive();
 
 const _id = joi.string().required();
 
-const paragraph = joi.string().regex(/^(?:intro|verse|chorus|bridge)$/).required();
+const paragraph = joi.string().regex(/^(?:intro|verse|preChorus|chorus|bridge|outro)$/).required();
 const fileFormat = joi.string().regex(/^(?:m4a|mp3)$/).required();
 
 // #endregion public joiSchema
@@ -68,14 +68,20 @@ const createSong = joi.object().keys({
     year,
     intro: songTime.required(),
     verse: songTime.required(),
+    preChorus: songTime,
     chorus: songTime.required(),
     bridge: songTime,
+    outro: songTime,
     creatUser
 });
 
 const readSong = joi.object().keys({
     singerName,
     songTitle
+});
+
+const readSongByytID = joi.object().keys({
+    ytLink
 });
 
 const updateSong = joi.object().keys({
@@ -105,6 +111,7 @@ const applyAddSong = joi.object().keys({
 module.exports = {
     createSong,
     readSong,
+    readSongByytID,
     updateSong,
     deleteSong,
     readSampleSong,

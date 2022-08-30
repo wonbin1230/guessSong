@@ -6,9 +6,31 @@ const path = require("path");
 const ffmpeg = require("fluent-ffmpeg");
 const ytdl = require("ytdl-core");
 const moment = require("moment");
+const mv = require("mv");
+const env = require("../../env");
+
+module.exports.readAll = async function () {
+    const songInfo = await songDao.readAll();
+    return new resModel(songInfo);
+};
 
 module.exports.readSong = async function (query) {
     const songInfo = await songDao.readSong(query);
+    if (songInfo) {
+        return new resModel("資料庫中已有相同歌曲", 98);
+    }
+    return new resModel(songInfo);
+};
+
+module.exports.readSongByytID = async function (body) {
+    const ytLink = body.ytLink;
+    const reqUrl = new URL(ytLink);
+    const params = reqUrl.searchParams;
+
+    const songInfo = await songDao.readSongByytID(params.get("v"));
+    if (songInfo) {
+        return new resModel("資料庫中已有相同youtube連結", 98);
+    }
     return new resModel(songInfo);
 };
 
@@ -18,26 +40,18 @@ module.exports.createSong = async function (body) {
     const params = reqUrl.searchParams;
     body.ytID = params.get("v");
 
-    const songInfo = await songDao.readSong(body);
-    if (songInfo) {
-        return new resModel("資料庫中已有相同歌曲");
-    }
-
     const songInfoTmp = splitService.create(body);
     if (songInfoTmp) {
         return new resModel("已有相同歌曲列隊新增中");
     }
     const info = await ytdl.getInfo(body.ytID);
     const filePath = ytdl.chooseFormat(info.formats, { quality: "140", filter: "audioonly" }).url;
-    await splitSong(body.ytID, "intro", body.intro, filePath);
-    await splitSong(body.ytID, "verse", body.verse, filePath);
-    await splitSong(body.ytID, "chorus", body.chorus, filePath);
-    await splitSongMP3(body.ytID, "intro", body.intro, filePath);
-    await splitSongMP3(body.ytID, "verse", body.verse, filePath);
-    await splitSongMP3(body.ytID, "chorus", body.chorus, filePath);
-    if (body.bridge) {
-        await splitSong(body.ytID, "bridge", body.bridge, filePath);
-        await splitSongMP3(body.ytID, "bridge", body.bridge, filePath);
+    const paragraph = ["intro", "verse", "preChorus", "chorus", "bridge", "outro"];
+    for (const key in body) {
+        if (paragraph.includes(key)) {
+            await splitSong(body.ytID, key, body[key], filePath);
+            //await splitSongMP3(body.ytID, key, body[key], filePath);
+        }
     }
     const res = body.ytID;
     return new resModel(res);
@@ -58,35 +72,52 @@ async function splitSong(ytID, key, time, filePath) {
             .seekInput(time.begin)
             .duration(time.duration)
             .save(newFilePath)
-            .on("end", () => {
+            .on("end", async () => {
                 console.log(`${ytID} ${key} Split End`);
+                await splitSongMP3(ytID, key, newFilePath);
                 resolve();
             });
     });
 }
 
-async function splitSongMP3(ytID, key, time, filePath) {
+async function splitSongMP3(ytID, key, filePath) {
     const audioPath = path.join(__dirname, "../public/audio", ytID);
     fs.mkdirSync(audioPath, { recursive: true });
     const newFilePath = path.join(audioPath, `${key}.mp3`);
 
-    const begin = moment(`2022-01-01 00:${time.begin}`);
-    const end = moment(`2022-01-01 00:${time.end}`);
-    time.duration = end.diff(begin, "s");
-    splitService.addDuration(ytID, key, time);
-
     return new Promise((resolve) => {
         ffmpeg(filePath)
-            .seekInput(time.begin)
-            .duration(time.duration)
             .audioCodec("libmp3lame")
             .save(newFilePath)
             .on("end", () => {
-                console.log(`${ytID} ${key} MP3 Split End`);
+                console.log(`${ytID} ${key} MP3 format End`);
                 resolve();
             });
     });
 }
+
+// async function splitSongMP3(ytID, key, time, filePath) {
+//     const audioPath = path.join(__dirname, "../public/audio", ytID);
+//     fs.mkdirSync(audioPath, { recursive: true });
+//     const newFilePath = path.join(audioPath, `${key}.mp3`);
+
+//     const begin = moment(`2022-01-01 00:${time.begin}`);
+//     const end = moment(`2022-01-01 00:${time.end}`);
+//     time.duration = end.diff(begin, "s");
+//     splitService.addDuration(ytID, key, time);
+
+//     return new Promise((resolve) => {
+//         ffmpeg(filePath)
+//             .seekInput(time.begin)
+//             .duration(time.duration)
+//             .audioCodec("libmp3lame")
+//             .save(newFilePath)
+//             .on("end", () => {
+//                 console.log(`${ytID} ${key} MP3 Split End`);
+//                 resolve();
+//             });
+//     });
+// }
 
 module.exports.updateSong = async function (body) {
     const songInfo = await songDao.updateSong(body);
@@ -105,6 +136,14 @@ module.exports.applyAddSong = async function (body) {
     if (!songInfo) {
         return new resModel("此歌曲未在列隊新增中");
     }
-    const res = await songDao.saveSong(songInfo);
-    return new resModel(res);
+    const audioPath = path.join(__dirname, "../public/audio", songInfo.ytID);
+    const audioFolder = path.join(env.audioFolder, songInfo.ytID);
+    mv(audioPath, audioFolder, { mkdirp: true }, async (err) => {
+        if (err) {
+            console.log(err);
+            return new resModel("移動檔案時發生錯誤");
+        }
+        const res = await songDao.saveSong(songInfo);
+        return new resModel(res);
+    });
 };

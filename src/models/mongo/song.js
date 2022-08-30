@@ -5,22 +5,24 @@ module.exports = (mongoose) => {
 };
 
 const timeDoc = new Mongoose.Schema({
-    begin: String,
-    end: String,
-    duration: Number
+    begin: { type: String, required: true },
+    end: { type: String, required: true },
+    duration: { type: Number, required: true }
 });
 
 const songDoc = new Mongoose.Schema({
-    ytLink: String,
-    ytID: String,
-    singerName: String,
-    gender: String,
-    songTitle: String,
-    songLanguage: String,
-    theme: Array,
+    ytLink: { type: String, required: true },
+    ytID: { type: String, required: true },
+    singerName: { type: String, required: true },
+    gender: { type: String, required: true },
+    songTitle: { type: String, required: true },
+    songLanguage: { type: String, required: true },
+    theme: String,
     year: Number,
-    intro: timeDoc,
-    verse: timeDoc,
-    chorus: timeDoc,
-    bridge: timeDoc
+    intro: { type: timeDoc, required: true },
+    verse: { type: timeDoc, required: true },
+    preChorus: timeDoc,
+    chorus: { type: timeDoc, required: true },
+    bridge: timeDoc,
+    outro: timeDoc
 });
