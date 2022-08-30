@@ -13,6 +13,10 @@ const splitService = {
     },
     read(ytID) {
         return splitService.row[ytID];
+    },
+    delete(ytID) {
+        delete splitService.row[ytID];
+        return;
     }
 };
 
