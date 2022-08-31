@@ -52,7 +52,7 @@
         background-color: rgb(226, 226, 226);
     }
     button {
-        width: 200px;
+        width: 150px;
     }
     a, a:hover{ 
         text-decoration:none
@@ -69,8 +69,12 @@
     .ui-grid-pager-panel {
         color: white;
     }
+    input[type="time"]::-webkit-calendar-picker-indicator {
+    background: none;
+    }
 </style>
 <body>
+    <%-include ('loadingDiv') %>
     <div class="wrap">
         <div class="row g-3 col-6">
             <div class="flex">
@@ -172,9 +176,19 @@
                 </div>
             </div>
         </div>
-        <div class="" style="text-align: right; margin-top: 10px;">
-            <button type="button" class="btn btn-primary" onclick="createSong()">送出並試聽</button>
-            <button type="reset" class="btn btn-danger">清除</button>
+        <div class="flex" style="margin: 20px 0;">
+            <div style="margin-left: 10px;">
+                <button type="button" class="btn btn-success" onclick="audition()">前奏</button>
+                <button type="button" class="btn btn-success" style="display: none;">主歌</button>
+                <button type="button" class="btn btn-success" style="display: none;">導歌</button>
+                <button type="button" class="btn btn-success" style="display: none;">副歌</button>
+                <button type="button" class="btn btn-success" style="display: none;">Bridge</button>
+                <button type="button" class="btn btn-success" style="display: none;">尾奏</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" onclick="createSong()">送出並試聽</button>
+                <button type="reset" class="btn btn-danger">清除</button>
+            </div>
         </div>
         <!-- AngularJS Div-->
         <div class="col-6" id="controller" ng-app="myApp" ng-controller="Ctrl" ng-init="init()"
@@ -406,6 +420,10 @@
             });
         }
     };
+
+    function audition() {
+        loading_div_open()
+    }
 </script>
 <!-- <script src="../public/js/uiGrid.js" type="text/javascript"></script> -->
 </html>
