@@ -95,7 +95,7 @@ const updateSong = joi.object().keys({
 });
 
 const deleteSong = joi.object().keys({
-    _id: joi.string().required()
+    ytID: ytID.required()
 });
 
 const readSampleSong = joi.object().keys({

@@ -139,8 +139,9 @@ module.exports.updateSong = async function (body) {
 };
 
 module.exports.deleteSong = async function (query) {
-    const songInfo = await songDao.deleteSong(query._id);
-    const audioPath = path.join(__dirname, "../public/audio", songInfo.ytID);
+    const songInfo = Object.assign({}, splitService.read(query.ytID));
+    splitService.delete(query.ytID);
+    const audioPath = path.join(__dirname, "../public/audio", query.ytID);
     fs.rmSync(audioPath, { recursive: true });
     return new resModel(songInfo);
 };
