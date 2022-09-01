@@ -1,0 +1,26 @@
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fw-bold" id="staticBackdropLabel" style="color: black; margin: 0 auto;"></h2>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <button type="button" class="btn btn-primary btnIntro" style="display: none; width: 100px;" onclick='audition("intro")'>前奏</button>
+        <button type="button" class="btn btn-primary btnVerse" style="display: none; width: 100px;" onclick='audition("verse")'>主歌</button>
+        <button type="button" class="btn btn-primary btnPreChorus" style="display: none; width: 100px;" onclick='audition("preChorus")'>導歌</button>
+        <button type="button" class="btn btn-primary btnChorus" style="display: none; width: 100px;" onclick='audition("chorus")'>副歌</button>
+        <button type="button" class="btn btn-primary btnBridge" style="display: none; width: 100px;" onclick='audition("bridge")'>Bridge</button>
+        <button type="button" class="btn btn-primary btnOutro" style="display: none; width: 100px;" onclick='audition("outro")'>尾奏</button>
+        <div class="player"></div>
+      </div>
+      <div class="modal-footer flex">
+        <div>
+            <button type="button" class="btn btn-danger" style="width: 150px;" onclick="auditionDel()">刪除試聽歌曲</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="$('audio').remove()">關閉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
