@@ -15,10 +15,6 @@
         font-family: Microsoft JhengHei;
         font-weight: 1000;
     }
-    .wrap {
-        max-width: 1900px;
-        max-height: 672px;
-    }
     .flex {
         display: flex;
         justify-content: space-between;
@@ -178,16 +174,19 @@
         </div>
         <div class="flex" style="margin: 20px 0;">
             <div style="margin-left: 10px;">
-                <button type="button" class="btn btn-success" onclick="audition()">前奏</button>
-                <button type="button" class="btn btn-success" style="display: none;">主歌</button>
-                <button type="button" class="btn btn-success" style="display: none;">導歌</button>
-                <button type="button" class="btn btn-success" style="display: none;">副歌</button>
-                <button type="button" class="btn btn-success" style="display: none;">Bridge</button>
-                <button type="button" class="btn btn-success" style="display: none;">尾奏</button>
+                <label for="ytID" class="form-label">YoutubeID</label>
+                <input type="text" id="ytID" placeholder="LRZVjXje1Hk">
+                <button type="button" class="btn btn-success" style="width: 100px;" onclick='audition("intro")'>前奏</button>
+                <button type="button" class="btn btn-success" style="width: 100px;" onclick='audition("verse")'>主歌</button>
+                <button type="button" class="btn btn-success" style="width: 100px;" onclick='audition("preChorus")'>導歌</button>
+                <button type="button" class="btn btn-success" style="width: 100px;" onclick='audition("chorus")'>副歌</button>
+                <button type="button" class="btn btn-success" style="width: 100px;" onclick='audition("bridge")'>Bridge</button>
+                <button type="button" class="btn btn-success" style="width: 100px;" onclick='audition("outro")'>尾奏</button>
+                <button type="button" class="btn btn-danger" style="width: 150px; margin-left: 20px;" onclick="auditionDel()">刪除試聽歌曲</button>
             </div>
             <div>
                 <button type="button" class="btn btn-primary" onclick="createSong()">送出並試聽</button>
-                <button type="reset" class="btn btn-danger">清除</button>
+                <button type="reset" class="btn btn-danger">清除輸入資料</button>
             </div>
         </div>
         <!-- AngularJS Div-->
@@ -200,6 +199,7 @@
         </div>
         <!-- AngularJS Div End-->
     </div>
+    <div class="player"></div>
 </body>
 <script>
     const app = angular.module("myApp", ['ui.grid', 'ui.grid.selection', 'ui.grid.resizeColumns', 'ui.grid.autoResize', 
@@ -383,7 +383,7 @@
             await axios.post("http://192.168.10.20:3000/song/read", {
             ytLink: $('#ytLink').val()
             }).then(res => {
-                if (res.data.code != 0 && $('#ytLink').val()) {
+                if (res.data.code !== 0 && $('#ytLink').val()) {
                     return alert(res.data.msg)
                 }
         });
@@ -399,30 +399,72 @@
                     songTitle: $("#songTitle").val()
                 }
             }).then(res => {
-                    if (res.data.code != 0 && $("#singerName, #songTitle").val()) {
-                        $("#singerName, #songTitle").val("")
-                        return alert(res.data.msg)
-                    }
+                if (res.data.code !== 0 && $("#singerName, #songTitle").val()) {
+                    $("#singerName, #songTitle").val("")
+                    return alert(res.data.msg)
+                }
             });
         }
     });
     
+    // 送出資料拿ytID
     async function createSong() {
+        loading_div_open()
         let songVal = await getVal();
         if (!songVal.ytLink || !songVal.songTitle || !songVal.singerName || !songVal.gender || !songVal.songLanguage || 
             !songVal.verse || !songVal.chorus) {
+            loading_div_close()
             return alert("有必填欄位沒填哦！")
         } else {
             await axios.post("http://192.168.10.20:3000/song",
                 songVal
             ).then(res => {
-                console.log(res);
+                if (res.data.code === 0) {
+                    $("#ytID").val(res.data.data)
+                } else {
+                    return alert(res.data.msg)
+                }
             });
         }
+        loading_div_close()
     };
 
-    function audition() {
-        loading_div_open()
+    // 取ytID刪除暫存檔
+    async function auditionDel() {
+        let ytID = $("#ytID").val();
+        if (confirm("確定要刪除嗎？")) {
+            if (!ytID) {
+            return alert("未輸入YoutubeID，無法刪除")
+            } else {
+                await axios.delete("http://192.168.10.20:3000/song", {
+                    params: {
+                        ytID: ytID
+                    }
+                }).then(res => {
+                    if (res.data.code === 0) {
+                        $("#ytID").val("")
+                        return alert("刪除成功！")
+                    } else {
+                        return alert(res.data.msg)
+                    }
+                })
+            }
+        }
+    }
+
+    // 試聽
+    function audition(type) {
+        let paragraph = type;
+        let ytID = $("#ytID").val();
+        const audioURL = `http://192.168.10.20:3000/song/sample?ytID=${ytID}&paragraph=${paragraph}&fileFormat=mp3`
+        //$("#audioURL").text(audioURL)
+        let html = `
+        <audio controls autoplay>
+            <source src="${audioURL}" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>`
+        $("audio").remove();
+        $(".player").append(html)
     }
 </script>
 <!-- <script src="../public/js/uiGrid.js" type="text/javascript"></script> -->
