@@ -328,6 +328,15 @@
                         <span style="color: red;">{{COL_FIELD.end}}</span>
                     </div>`
                 },
+                {
+                    field: '_id',
+                    displayName: '刪除歌曲',
+                    headerCellClass: 'text-center',
+                    width: 120,
+                    cellClass: 'text-center',
+                    cellTemplate:
+                    `<button type="button" class="btn btn-danger" ng-click="grid.appScope.applyDeleteSong('{{row.entity._id}}')" style="width: 100px; height: 30px">刪除</button>`
+                },
                 // {
                 //     field: 'tradevoume',
                 //     displayName: '成交張數',
@@ -345,7 +354,9 @@
                 // },
                 
             ],
-                onRegisterApi: function(gridApi){ $scope.UIgridApi = gridApi;}
+                onRegisterApi: function(gridApi){ 
+                    $scope.UIgridApi = gridApi;
+                }
         };
         $scope.init = function () {
             axios.get("http://192.168.10.20:3000/song").then(res => {
@@ -354,12 +365,34 @@
                 console.log($scope.gridOptions.data);
             });
         };
+
+        $scope.applyDeleteSong = function (_id) {
+            console.log(_id);
+            if (confirm("刪除後無法復原，確定要刪除嗎？")) {
+                axios.delete("http://192.168.10.20:3000/song/apply", {
+                    params: {
+                        _id: _id
+                    }
+                }).then(res => {
+                    if (res.data.code === 0) {
+                        window.location.refresh();
+                        return alert("刪除成功！")
+                    } else {
+                        console.log(res);
+                        return alert(res.data.msg)
+                    }
+                })
+            } else {
+                return alert("不刪還按，調皮(◔⊖◔)つ")
+            }
+        }
     });
 
     // 取所有input及select的values
     function getVal() {
         const getVal = {};
         const $inputs = $(".form-control,.form-select");
+        console.log($inputs);
         $inputs.each(function (index) {
             if (this.value && this.value !== "") {
                 if (this.id.includes("Start")) {
@@ -422,18 +455,17 @@
             await axios.post("http://192.168.10.20:3000/song",
                 songVal
             ).then(res => {
-                console.log(res);
                 if (res.data.code === 0) {
                     $("#ytID").val(res.data.data);
                     $("#staticBackdrop").modal("show");
                     $("#auditionBtn").show();
                     $(".modal-title").append(songVal.songTitle);
-                    songVal.intro ? $(".btnIntro").show() : $(".btnIntro").hide();
-                    songVal.verse ? $(".btnVerse").show() : $(".btnVerse").hide();
-                    songVal.preChorus ? $(".btnPreChorus").show() : $(".btnPreChorus").hide();
-                    songVal.chorus ? $(".btnChorus").show() : $(".btnChorus").hide();
-                    songVal.bridge ? $(".btnBridge").show() : $(".btnBridge").hide();
-                    songVal.outro ? $(".btnOutro").show() : $(".btnOutro").hide();
+                    songVal.intro ? $(".btnIntro").removeAttr("disabled") : $(".btnIntro").attr("disabled");
+                    songVal.verse ? $(".btnVerse").removeAttr("disabled") : $(".btnVerse").attr("disabled");
+                    songVal.preChorus ? $(".btnPreChorus").removeAttr("disabled") : $(".btnPreChorus").attr("disabled");
+                    songVal.chorus ? $(".btnChorus").removeAttr("disabled") : $(".btnChorus").attr("disabled");
+                    songVal.bridge ? $(".btnBridge").removeAttr("disabled") : $(".btnBridge").attr("disabled");
+                    songVal.outro ? $(".btnOutro").removeAttr("disabled") : $(".btnOutro").attr("disabled");
                 } else {
                     return alert(res.data.msg)
                 }
@@ -443,7 +475,7 @@
     };
 
     // 取ytID刪除暫存檔
-    async function auditionDel() {
+    async function auditionDelete() {
         let ytID = $("#ytID").val();
         if (confirm("確定要刪除嗎？")) {
             if (!ytID) {
@@ -456,6 +488,9 @@
                 }).then(res => {
                     if (res.data.code === 0) {
                         $("#ytID").val("")
+                        $("#staticBackdrop").modal("hide");
+                        $("#auditionBtn").hide();
+                        $('audio').remove()
                         return alert("刪除成功！")
                     } else {
                         return alert(res.data.msg)
@@ -478,6 +513,25 @@
         </audio>`
         $("audio").remove();
         $(".player").append(html)
+    }
+
+    // 將試聽後歌曲送入DB
+    async function applyAddSong() {
+        if (!$("#ytID").val()) {
+            return alert("此試聽歌曲沒有在暫存列表中哦！")
+        } else {
+            await axios.post("http://192.168.10.20:3000/song/apply", {
+                ytID: $("#ytID").val()
+            }).then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    window.location.reload();
+                    return alert("正式歌曲新增成功！")
+                } else {
+                    return alert(res.data.msg)
+                }
+            })
+        }
     }
 
     // 測試資料
