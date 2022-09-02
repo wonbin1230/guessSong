@@ -12,8 +12,9 @@ router.route("/read")
   .get(songController.readSong)
   .post(songController.readSongByytID);
 
-router.route("/applyAddSong")
-  .post(songController.applyAddSong);
+router.route("/apply")
+  .post(songController.applyAddSong)
+  .delete(songController.applyDeleteSong);
 
 router.route("/sample")
   .get(songController.readSampleSong);
