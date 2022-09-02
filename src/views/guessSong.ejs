@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%- include('layout') %>
 </head>
@@ -15,11 +16,13 @@
         font-family: Microsoft JhengHei;
         font-weight: 1000;
     }
+
     .flex {
         display: flex;
         justify-content: space-between;
         margin-left: 7px;
     }
+
     .flexTime {
         display: flex;
         flex-direction: column;
@@ -28,190 +31,209 @@
         height: 150px;
         margin-left: 7px;
     }
+
     .gridFlex {
         display: flex;
         justify-content: space-between;
         margin: 0 10px;
     }
+
     .row {
         width: 650px;
     }
+
     .bb {
         padding-bottom: 20px;
         border-bottom: 3px solid white;
     }
+
     .redStar:after {
         content: "＊";
         color: red;
     }
-    .areaColor, area {
+
+    .areaColor,
+    area {
         background-color: rgb(226, 226, 226);
     }
+
     button {
         width: 150px;
     }
-    a, a:hover{ 
-        text-decoration:none
+
+    a,
+    a:hover {
+        text-decoration: none
     }
+
     .myGrid {
         margin: 10px 0 0 10px;
         width: 1900px;
         height: 580px;
         color: black;
     }
+
     .text-center {
         text-align: center;
     }
+
     .ui-grid-pager-panel {
         color: white;
     }
+
     input[type="time"]::-webkit-calendar-picker-indicator {
         display: none;
     }
+
     input[type="time"]::-webkit-datetime-edit-ampm-field {
         display: none;
     }
-
 </style>
+
 <body>
     <%-include ('loadingDiv') %>
-    <%-include ('auditionModal') %>
-    <div class="wrap">
-        <div class="row g-3 col-6">
-            <div class="flex">
-                <div class="col-10 bb">
-                    <label for="ytLink" class="form-label redStar">影片網址</label>
-                    <input type="text" class="form-control" id="ytLink" placeholder="https://www.youtube.com/watch?v=xE1jI6vShSQ">
-                </div>
-                <div class="col-10 bb">
-                    <label for="songTitle" class="form-label redStar">歌曲名稱</label>
-                    <input type="text" class="form-control" id="songTitle" placeholder="最偉大的作品">
-                </div>
-                <div class="col-8 bb">
-                    <label for="theme" class="form-label">戲劇/電影</label>
-                    <input type="text" class="form-control" id="theme" placeholder="海洋天堂">
-                </div>
-                <div class="col-4 bb">
-                    <label for="singerName" class="form-label redStar">歌手名稱</label>
-                    <input type="text" class="form-control" id="singerName" placeholder="周杰倫">
-                </div>
-                <div class="col-2 bb">
-                    <label for="gender" class="form-label redStar">種類</label>
-                    <select id="gender" class="form-select">
-                        <option></option>
-                        <option>男</option>
-                        <option>女</option>
-                        <option>團體</option>
-                    </select>
-                </div>
-                <div class="col-2 bb">
-                    <label for="songLanguage" class="form-label redStar">語系</label>
-                    <select id="songLanguage" class="form-select">
-                    <option></option>
-                    <option>華</option>
-                    <option>台</option>
-                    <option>韓</option>
-                    <option>英</option>
-                    <option>日</option>
-                    <option>粵</option>
-                    </select>
-                </div>
-                <!-- <div class="col-6 bb">
+        <%-include ('auditionModal') %>
+            <div class="wrap">
+                <div class="row g-3 col-6">
+                    <div class="flex">
+                        <div class="col-10 bb">
+                            <label for="ytLink" class="form-label redStar">影片網址</label>
+                            <input type="text" class="form-control" id="ytLink"
+                                placeholder="https://www.youtube.com/watch?v=xE1jI6vShSQ">
+                        </div>
+                        <div class="col-10 bb">
+                            <label for="songTitle" class="form-label redStar">歌曲名稱</label>
+                            <input type="text" class="form-control" id="songTitle" placeholder="最偉大的作品">
+                        </div>
+                        <div class="col-8 bb">
+                            <label for="theme" class="form-label">戲劇/電影</label>
+                            <input type="text" class="form-control" id="theme" placeholder="海洋天堂">
+                        </div>
+                        <div class="col-4 bb">
+                            <label for="singerName" class="form-label redStar">歌手名稱</label>
+                            <input type="text" class="form-control" id="singerName" placeholder="周杰倫">
+                        </div>
+                        <div class="col-2 bb">
+                            <label for="gender" class="form-label redStar">種類</label>
+                            <select id="gender" class="form-select">
+                                <option></option>
+                                <option>男</option>
+                                <option>女</option>
+                                <option>團體</option>
+                            </select>
+                        </div>
+                        <div class="col-2 bb">
+                            <label for="songLanguage" class="form-label redStar">語系</label>
+                            <select id="songLanguage" class="form-select">
+                                <option></option>
+                                <option>華</option>
+                                <option>台</option>
+                                <option>韓</option>
+                                <option>英</option>
+                                <option>日</option>
+                                <option>粵</option>
+                            </select>
+                        </div>
+                        <!-- <div class="col-6 bb">
                     <label for="year" class="form-label">歌曲年份</label>
                     <input type="number" min="1900" max="2100" class="form-control" id="year" placeholder="2022" value="2022">
                 </div> -->
-            </div>
+                    </div>
 
-            <div class="flexTime">
-                    <!-- 前奏 -->
-                <div class="col-6">
-                    <label for="introStart" class="form-label">前奏開始時間</label>
-                    <input type="time" class="form-control col-6 areaColor" id="introStart" placeholder="">
+                    <div class="flexTime">
+                        <!-- 前奏 -->
+                        <div class="col-6">
+                            <label for="introStart" class="form-label">前奏開始時間</label>
+                            <input type="time" class="form-control col-6 areaColor" id="introStart" placeholder="">
+                        </div>
+                        <div class="col-6">
+                            <label for="introEnd" class="form-label">前奏結束時間</label>
+                            <input type="time" class="form-control col-6 areaColor" id="introEnd" placeholder="">
+                        </div>
+                        <!-- 主歌 -->
+                        <div class="col-6">
+                            <label for="verseStart" class="form-label redStar">主歌開始時間</label>
+                            <input type="time" class="form-control col-6" id="verseStart" placeholder="">
+                        </div>
+                        <div class="col-6">
+                            <label for="verseEnd" class="form-label redStar">主歌結束時間</label>
+                            <input type="time" class="form-control col-6" id="verseEnd" placeholder="">
+                        </div>
+                        <!-- 導歌 -->
+                        <div class="col-6">
+                            <label for="preChorusStart" class="form-label">導歌開始時間</label>
+                            <input type="time" class="form-control col-6 areaColor" id="preChorusStart" placeholder="">
+                        </div>
+                        <div class="col-6">
+                            <label for="preChorusEnd" class="form-label">導歌結束時間</label>
+                            <input type="time" class="form-control col-6 areaColor" id="preChorusEnd" placeholder="">
+                        </div>
+                        <!-- 副歌 -->
+                        <div class="col-6">
+                            <label for="chorusStart" class="form-label redStar">副歌開始時間</label>
+                            <input type="time" class="form-control col-6" id="chorusStart" placeholder="">
+                        </div>
+                        <div class="col-6">
+                            <label for="chorusEnd" class="form-label redStar">副歌結束時間</label>
+                            <input type="time" class="form-control col-6" id="chorusEnd" placeholder="">
+                        </div>
+                        <!-- 橋梁 -->
+                        <div class="col-6">
+                            <label for="bridgeStart" class="form-label">Bridge開始時間</label>
+                            <input type="time" class="form-control col-6 areaColor" id="bridgeStart" placeholder="">
+                        </div>
+                        <div class="col-6">
+                            <label for="bridgeEnd" class="form-label">Bridge結束時間</label>
+                            <input type="time" class="form-control col-6 areaColor" id="bridgeEnd" placeholder="">
+                        </div>
+                        <!-- 尾奏 -->
+                        <div class="col-6">
+                            <label for="outroStart" class="form-label">尾奏開始時間</label>
+                            <input type="time" class="form-control col-6" id="outroStart" placeholder="">
+                        </div>
+                        <div class="col-6">
+                            <label for="outroEnd" class="form-label">尾奏結束時間</label>
+                            <input type="time" class="form-control col-6" id="outroEnd" placeholder="">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <label for="introEnd" class="form-label">前奏結束時間</label>
-                    <input type="time" class="form-control col-6 areaColor" id="introEnd" placeholder="">
+                <div class="flex" style="margin: 20px 0;">
+                    <div style="margin-left: 10px;">
+                        <input type="text" id="ytID" style="display: none;">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" style="display: none;" id="auditionBtn">
+                            試聽
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-info" onclick="testValues()">測試資料</button>
+                        <button type="button" class="btn btn-primary" onclick="createSong()">送出並試聽</button>
+                        <button type="reset" class="btn btn-danger"
+                            onclick='$(".form-control,.form-select").val("")'>清除輸入資料</button>
+                    </div>
                 </div>
-                <!-- 主歌 -->
-                <div class="col-6">
-                    <label for="verseStart" class="form-label redStar">主歌開始時間</label>
-                    <input type="time" class="form-control col-6" id="verseStart" placeholder="">
+                <!-- AngularJS Div-->
+                <div class="col-6" id="controller" ng-app="myApp" ng-controller="Ctrl" ng-init="init()"
+                    ui-i18n="{{lang}}" class="row">
+                    <!-- Grid -->
+                    <div class="myGrid" ui-grid="gridOptions" ui-grid-selection ui-grid-move-columns ui-grid-pagination
+                        ui-grid-resize-columns ui-grid-pinning></div>
+                    <!-- Grid End-->
                 </div>
-                <div class="col-6">
-                    <label for="verseEnd" class="form-label redStar">主歌結束時間</label>
-                    <input type="time" class="form-control col-6" id="verseEnd" placeholder="">
-                </div>
-                <!-- 導歌 -->
-                <div class="col-6">
-                    <label for="preChorusStart" class="form-label">導歌開始時間</label>
-                    <input type="time" class="form-control col-6 areaColor" id="preChorusStart" placeholder="">
-                </div>
-                <div class="col-6">
-                    <label for="preChorusEnd" class="form-label">導歌結束時間</label>
-                    <input type="time" class="form-control col-6 areaColor" id="preChorusEnd" placeholder="">
-                </div>
-                <!-- 副歌 -->
-                <div class="col-6">
-                    <label for="chorusStart" class="form-label redStar">副歌開始時間</label>
-                    <input type="time" class="form-control col-6" id="chorusStart" placeholder="">
-                </div>
-                <div class="col-6">
-                    <label for="chorusEnd" class="form-label redStar">副歌結束時間</label>
-                    <input type="time" class="form-control col-6" id="chorusEnd" placeholder="">
-                </div>
-                <!-- 橋梁 -->
-                <div class="col-6">
-                    <label for="bridgeStart" class="form-label">Bridge開始時間</label>
-                    <input type="time" class="form-control col-6 areaColor" id="bridgeStart" placeholder="">
-                </div>
-                <div class="col-6">
-                    <label for="bridgeEnd" class="form-label">Bridge結束時間</label>
-                    <input type="time" class="form-control col-6 areaColor" id="bridgeEnd" placeholder="">
-                </div>
-                <!-- 尾奏 -->
-                <div class="col-6">
-                    <label for="outroStart" class="form-label">尾奏開始時間</label>
-                    <input type="time" class="form-control col-6" id="outroStart" placeholder="">
-                </div>
-                <div class="col-6">
-                    <label for="outroEnd" class="form-label">尾奏結束時間</label>
-                    <input type="time" class="form-control col-6" id="outroEnd" placeholder="">
-                </div>
+                <!-- AngularJS Div End-->
             </div>
-        </div>
-        <div class="flex" style="margin: 20px 0;">
-            <div style="margin-left: 10px;">
-                <input type="text" id="ytID" style="display: none;">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display: none;" id="auditionBtn">
-                    試聽
-                </button>
-            </div>
-            <div>
-                <button type="button" class="btn btn-info" onclick="testValues()">測試資料</button>
-                <button type="button" class="btn btn-primary" onclick="createSong()">送出並試聽</button>
-                <button type="reset" class="btn btn-danger" onclick='$(".form-control,.form-select").val("")'>清除輸入資料</button>
-            </div>
-        </div>
-        <!-- AngularJS Div-->
-        <div class="col-6" id="controller" ng-app="myApp" ng-controller="Ctrl" ng-init="init()"
-        ui-i18n="{{lang}}" class="row">
-        <!-- Grid -->
-        <div class="myGrid" ui-grid="gridOptions" ui-grid-selection  ui-grid-move-columns ui-grid-pagination
-            ui-grid-resize-columns ui-grid-pinning></div>
-        <!-- Grid End-->
-        </div>
-        <!-- AngularJS Div End-->
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+                crossorigin="anonymous"></script>
 </body>
 <script>
-    const app = angular.module("myApp", ['ui.grid', 'ui.grid.selection', 'ui.grid.resizeColumns', 'ui.grid.autoResize', 
-    'ui.grid.moveColumns', "ui.grid.pagination", 'ui.grid.pinning']);
+    const app = angular.module("myApp", ['ui.grid', 'ui.grid.selection', 'ui.grid.resizeColumns', 'ui.grid.autoResize',
+        'ui.grid.moveColumns', "ui.grid.pagination", 'ui.grid.pinning']);
     // , 'ngTouch', 'ngAria', 'ngMaterial', 'ngMessages', 'ngAnimate'
 
     app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
         $scope.lang = 'zh-tw';
-        
+
         $scope.gridOptions = {
             paginationPageSizes: [10, 25, 50, 75],
             paginationPageSize: 15,
@@ -233,7 +255,7 @@
                     // pinnedLeft: true,
                     headerCellClass: 'text-center',
                     cellTemplate:
-                    `<div class="ui-grid-cell-contents">
+                        `<div class="ui-grid-cell-contents">
                         <a href="{{row.entity.ytLink}}" target="_blank">{{COL_FIELD}}</a>
                     </div>`
                 },
@@ -268,7 +290,7 @@
                     headerCellClass: 'text-center',
                     width: 150,
                     cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
+                        `<div class="ui-grid-cell-contents gridFlex">
                         <span style="color: green;">{{COL_FIELD.begin}}</span>
                         <span style="color: red;">{{COL_FIELD.end}}</span>
                     </div>`
@@ -279,7 +301,7 @@
                     headerCellClass: 'text-center',
                     width: 150,
                     cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
+                        `<div class="ui-grid-cell-contents gridFlex">
                         <span style="color: green;">{{COL_FIELD.begin}}</span>
                         <span style="color: red;">{{COL_FIELD.end}}</span>
                     </div>`
@@ -290,7 +312,7 @@
                     headerCellClass: 'text-center',
                     width: 150,
                     cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
+                        `<div class="ui-grid-cell-contents gridFlex">
                         <span style="color: green;">{{COL_FIELD.begin}}</span>
                         <span style="color: red;">{{COL_FIELD.end}}</span>
                     </div>`
@@ -301,7 +323,7 @@
                     headerCellClass: 'text-center',
                     width: 150,
                     cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
+                        `<div class="ui-grid-cell-contents gridFlex">
                         <span style="color: green;">{{COL_FIELD.begin}}</span>
                         <span style="color: red;">{{COL_FIELD.end}}</span>
                     </div>`
@@ -312,7 +334,7 @@
                     headerCellClass: 'text-center',
                     width: 150,
                     cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
+                        `<div class="ui-grid-cell-contents gridFlex">
                         <span style="color: green;">{{COL_FIELD.begin}}</span>
                         <span style="color: red;">{{COL_FIELD.end}}</span>
                     </div>`
@@ -323,7 +345,7 @@
                     headerCellClass: 'text-center',
                     width: 150,
                     cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
+                        `<div class="ui-grid-cell-contents gridFlex">
                         <span style="color: green;">{{COL_FIELD.begin}}</span>
                         <span style="color: red;">{{COL_FIELD.end}}</span>
                     </div>`
@@ -335,7 +357,7 @@
                     width: 120,
                     cellClass: 'text-center',
                     cellTemplate:
-                    `<button type="button" class="btn btn-danger" ng-click="grid.appScope.applyDeleteSong('{{row.entity._id}}')" style="width: 100px; height: 30px">刪除</button>`
+                        `<button type="button" class="btn btn-danger" ng-click='grid.appScope.applyDeleteSong(row)' style="width: 100px; height: 30px">刪除</button>`
                 },
                 // {
                 //     field: 'tradevoume',
@@ -352,11 +374,11 @@
                 //         }
                 //     ]
                 // },
-                
+
             ],
-                onRegisterApi: function(gridApi){ 
-                    $scope.UIgridApi = gridApi;
-                }
+            onRegisterApi: function (gridApi) {
+                $scope.UIgridApi = gridApi;
+            }
         };
         $scope.init = function () {
             axios.get("http://192.168.10.20:3000/song").then(res => {
@@ -366,8 +388,8 @@
             });
         };
 
-        $scope.applyDeleteSong = function (_id) {
-            console.log(_id);
+        $scope.applyDeleteSong = function (row) {
+            const _id = row.entity._id;
             if (confirm("刪除後無法復原，確定要刪除嗎？")) {
                 axios.delete("http://192.168.10.20:3000/song/apply", {
                     params: {
@@ -375,7 +397,7 @@
                     }
                 }).then(res => {
                     if (res.data.code === 0) {
-                        window.location.refresh();
+                        location.reload();
                         return alert("刪除成功！")
                     } else {
                         console.log(res);
@@ -414,20 +436,20 @@
     }
 
     // 檢查YT網址
-    $("#ytLink").blur(async function() {
+    $("#ytLink").blur(async function () {
         if ($("#ytLink").val()) {
             await axios.post("http://192.168.10.20:3000/song/read", {
-            ytLink: $('#ytLink').val()
+                ytLink: $('#ytLink').val()
             }).then(res => {
                 if (res.data.code !== 0 && $('#ytLink').val()) {
                     return alert(res.data.msg)
                 }
-        });
+            });
         }
     });
 
     // 檢查歌手名稱+歌曲名稱
-    $("#singerName, #songTitle").blur(async function() {
+    $("#singerName, #songTitle").blur(async function () {
         if ($("#singerName").val() && $("#songTitle").val()) {
             await axios.get("http://192.168.10.20:3000/song/read", {
                 params: {
@@ -442,12 +464,12 @@
             });
         }
     });
-    
+
     // 送出資料拿ytID
     async function createSong() {
         loading_div_open()
         let songVal = await getVal();
-        if (!songVal.ytLink || !songVal.songTitle || !songVal.singerName || !songVal.gender || !songVal.songLanguage || 
+        if (!songVal.ytLink || !songVal.songTitle || !songVal.singerName || !songVal.gender || !songVal.songLanguage ||
             !songVal.verse || !songVal.chorus) {
             loading_div_close()
             return alert("有必填欄位沒填哦！")
@@ -479,7 +501,7 @@
         let ytID = $("#ytID").val();
         if (confirm("確定要刪除嗎？")) {
             if (!ytID) {
-            return alert("未輸入YoutubeID，無法刪除")
+                return alert("未輸入YoutubeID，無法刪除")
             } else {
                 await axios.delete("http://192.168.10.20:3000/song", {
                     params: {
@@ -553,4 +575,5 @@
         $("#outroEnd").val("04:36");
     }
 </script>
+
 </html>
