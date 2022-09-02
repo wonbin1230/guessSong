@@ -91,6 +91,19 @@ module.exports.applyAddSong = async function (req, res, next) {
     }
 };
 
+module.exports.applyDeleteSong = async function (req, res, next) {
+    try {
+        const { error: joiErr } = songModel.applyDeleteSong.validate(req.query);
+        if (joiErr) {
+            throw new errModel(1, joiErr.message);
+        }
+        const resData = await songService.applyDeleteSong(req.query._id);
+        res.json(resData);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports.readSampleSong = async function (req, res, next) {
     try {
         const { error: joiErr } = songModel.readSampleSong.validate(req.query);
