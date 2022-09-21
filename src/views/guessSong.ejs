@@ -362,23 +362,20 @@
             axios.get("http://192.168.10.20:3000/song").then(res => {
                 $scope.gridOptions.data = res.data.data;
                 $scope.UIgridApi.core.refresh(); // 重整Grid資料
-                console.log($scope.gridOptions.data);
             });
         };
 
         $scope.applyDeleteSong = function (_id) {
-            console.log(_id);
             if (confirm("刪除後無法復原，確定要刪除嗎？")) {
                 axios.delete("http://192.168.10.20:3000/song/apply", {
                     params: {
-                        _id: _id
+                        _id: id
                     }
                 }).then(res => {
                     if (res.data.code === 0) {
                         window.location.refresh();
                         return alert("刪除成功！")
                     } else {
-                        console.log(res);
                         return alert(res.data.msg)
                     }
                 })
@@ -392,7 +389,6 @@
     function getVal() {
         const getVal = {};
         const $inputs = $(".form-control,.form-select");
-        console.log($inputs);
         $inputs.each(function (index) {
             if (this.value && this.value !== "") {
                 if (this.id.includes("Start")) {
@@ -523,7 +519,6 @@
             await axios.post("http://192.168.10.20:3000/song/apply", {
                 ytID: $("#ytID").val()
             }).then(res => {
-                console.log(res);
                 if (res.data.code === 0) {
                     window.location.reload();
                     return alert("正式歌曲新增成功！")
