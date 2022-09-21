@@ -3,7 +3,11 @@ const router = express.Router();
 const songController = require("../controller/songController");
 const loginAuth = require("../middlewares/loginAuth");
 
-router.get("/main", [loginAuth.loginAuth], (req, res) => {
+router.all("/*", [loginAuth.loginAuth], (req, res, next) => {
+  next();
+});
+
+router.get("/main", (req, res) => {
   res.render("guessSong", { title: "GuessSongs" });
 });
 
