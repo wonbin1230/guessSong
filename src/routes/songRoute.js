@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const songController = require("../controller/songController");
+const loginAuth = require("../middlewares/loginAuth");
+
+router.get("/main", [loginAuth.loginAuth], (req, res) => {
+  res.render("guessSong", { title: "GuessSongs" });
+});
 
 router.route("/")
   .get(songController.readAll)
