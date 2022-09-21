@@ -108,6 +108,9 @@ const applyAddSong = joi.object().keys({
     ytID: ytID.required()
 });
 
+const applyDeleteSong = joi.object().keys({
+    _id
+});
 module.exports = {
     createSong,
     readSong,
@@ -115,5 +118,6 @@ module.exports = {
     updateSong,
     deleteSong,
     readSampleSong,
-    applyAddSong
+    applyAddSong,
+    applyDeleteSong
 };

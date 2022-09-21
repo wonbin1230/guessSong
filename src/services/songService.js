@@ -42,7 +42,7 @@ module.exports.createSong = async function (body) {
 
     let songInfoTmp = splitService.create(body);
     if (songInfoTmp) {
-        return new resModel("已有相同歌曲列隊新增中");
+        return new resModel("已有相同歌曲列隊新增中", 98);
     }
 
     songInfoTmp = await songDao.readSongByytID(body.ytID);
@@ -161,17 +161,18 @@ module.exports.applyAddSong = async function (body) {
         res = await songDao.saveSong(songInfo);
         splitService.delete(body.ytID);
     }
-    // mv(audioPath, audioFolder, { mkdirp: true }, async (err) => {
-    //     if (err) {
-    //         console.log(err);
-    //         return new resModel("移動檔案時發生錯誤");
-    //     }
-    //     const res = await songDao.saveSong(songInfo);
-    //     splitService.delete(body.ytID);
-    //     return new resModel(res);
-    // });
-
     return new resModel(res);
+};
+
+module.exports.applyDeleteSong = async function (_id) {
+    const songInfo = await songDao.deleteSong(_id);
+
+    if (!songInfo) {
+        return new resModel("資料庫中沒有此歌曲", 97);
+    }
+    const audioPath = path.join(env.audioFolder, songInfo.ytID);
+    fs.rmSync(audioPath, { recursive: true });
+    return new resModel(songInfo);
 };
 
 function moveSong(audioPath, audioFolder) {
