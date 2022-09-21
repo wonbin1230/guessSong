@@ -27,7 +27,7 @@
     "moment": "^2.29.4",
     "mongoose": "^6.4.1",
     "mv": "^2.1.1",
-    "ytdl-core": "^4.11.1"
+    "ytdl-core": "^4.11.2"
   },
   "devDependencies": {
     "eslint": "^8.18.0"
