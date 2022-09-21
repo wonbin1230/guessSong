@@ -31,7 +31,8 @@ module.exports.login = async function (req, res, next) {
         console.log(userinfo.data);
         const decodeUserInfo = jwtDecode(userinfo.data.id_token);
         req.session.userInfo = decodeUserInfo;
-        res.render("guessSong", { title: "GuessSongs" });
+        res.redirect("/song/main");
+        //res.render("guessSong", { title: "GuessSongs" });
     } catch (err) {
         console.log(err);
         next(err);

@@ -23,9 +23,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
     secret: "guessSong",
     name: "sessionID",
+    saveUninitialized: false,
+    resave: true,
     cookie: {
-        secure: true,
-        httpOnly: true,
         maxAge: 1000 * 60 * 1000
     }
 }));
