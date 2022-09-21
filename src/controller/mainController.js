@@ -9,6 +9,10 @@ module.exports.login = async function (req, res, next) {
         const params = reqUrl.searchParams;
         const code = params.get("code");
 
+        if (!code || req.session.userInfo) {
+            return res.redirect("/song/main");
+        }
+
         const data = new URLSearchParams();
         data.append("grant_type", "authorization_code");
         data.append("code", code);
@@ -28,11 +32,9 @@ module.exports.login = async function (req, res, next) {
         const userinfo = await axios(axiosConfig);
 
         //TODO: 判斷email 是否在Mongo內 不在就踢 在就回主頁
-        console.log(userinfo.data);
         const decodeUserInfo = jwtDecode(userinfo.data.id_token);
         req.session.userInfo = decodeUserInfo;
         res.redirect("/song/main");
-        //res.render("guessSong", { title: "GuessSongs" });
     } catch (err) {
         console.log(err);
         next(err);
