@@ -24,5 +24,6 @@ const songDoc = new Mongoose.Schema({
     preChorus: timeDoc,
     chorus: { type: timeDoc, required: true },
     bridge: timeDoc,
-    outro: timeDoc
+    outro: timeDoc,
+    createUser: { type: String, required: true },
 });

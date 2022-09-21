@@ -10,6 +10,7 @@ module.exports.createSong = async function (req, res, next) {
         if (joiErr) {
             throw new errModel(1, joiErr.message);
         }
+        req.body.createUser = req.session.userInfo.name;
         const resData = await songService.createSong(req.body);
         res.json(resData);
     } catch (err) {

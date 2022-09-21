@@ -4,12 +4,16 @@ const jwtDecode = require("jwt-decode");
 
 module.exports.login = async function (req, res, next) {
     try {
+        if (req.session.userInfo) {
+            return res.redirect("/song/main");
+        }
+
         const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
         const reqUrl = new URL(fullUrl);
         const params = reqUrl.searchParams;
         const code = params.get("code");
 
-        if (!code || req.session.userInfo) {
+        if (!code) {
             return res.redirect("/song/main");
         }
 
@@ -31,8 +35,9 @@ module.exports.login = async function (req, res, next) {
 
         const userinfo = await axios(axiosConfig);
 
-        //TODO: 判斷email 是否在Mongo內 不在就踢 在就回主頁
         const decodeUserInfo = jwtDecode(userinfo.data.id_token);
+        //TODO: 判斷email 是否在Mongo內 不在就踢 在就回主頁
+        console.log(decodeUserInfo);
         req.session.userInfo = decodeUserInfo;
         res.redirect("/song/main");
     } catch (err) {

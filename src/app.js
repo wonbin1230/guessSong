@@ -24,10 +24,7 @@ app.use(session({
     secret: "guessSong",
     name: "sessionID",
     saveUninitialized: false,
-    resave: true,
-    cookie: {
-        maxAge: 1000 * 60 * 1000
-    }
+    resave: true
 }));
 
 app.use("/", mainRoute);
