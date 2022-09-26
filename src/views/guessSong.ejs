@@ -381,11 +381,19 @@
             }
         };
         $scope.init = function () {
-            axios.get("http://192.168.10.20:3000/song").then(res => {
-                $scope.gridOptions.data = res.data.data;
-                $scope.UIgridApi.core.refresh(); // 重整Grid資料
-                console.log($scope.gridOptions.data);
-            });
+            readSongAll()
+                .then(res => {
+                    $scope.gridOptions.data = res.data.data;
+                    $scope.UIgridApi.core.refresh(); // 重整Grid資料
+                })
+                .catch(error => {
+                    alert("資料獲取失敗")
+                })
+            // axios.get("http://192.168.10.20:3000/song").then(res => {
+            //     $scope.gridOptions.data = res.data.data;
+            //     $scope.UIgridApi.core.refresh(); // 重整Grid資料
+            //     console.log($scope.gridOptions.data);
+            // });
         };
 
         $scope.applyDeleteSong = function (row) {
