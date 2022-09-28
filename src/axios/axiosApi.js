@@ -1,21 +1,18 @@
-import Api from "./axiosServer";
-
 const apiPath = {
-    readSongAll: '/song',
-    applyDeleteSong: '/song/apply',
-    readSongByytID: '/song/read',
-    readSong: '/song/read',
-    createSong: '/song',
-    deleteSong: '/song',
+    readSongAll: "/song",
+    applyDeleteSong: "/song/apply",
+    readSongByytID: "/song/read",
+    readSong: "/song/read",
+    createSong: "/song",
+    deleteSong: "/song",
     readSampleSong: `/song/sample?ytID=${ytID}&paragraph=${paragraph}&fileFormat=mp3`,
-    applyAddSong: '/song/apply',
+    applyAddSong: "/song/apply",
 };
 
 const readSongAll = () => {
-    return Api("get", apiPath.readSongAll)
+    return apiUrl("get", apiPath.readSongAll);
 };
 
 const applyAddSong = (_id) => {
-    return Api("delete", apiPath.deleteSong, _id)
+    return apiUrl("delete", apiPath.deleteSong, _id);
 };
-

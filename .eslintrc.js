@@ -7,7 +7,8 @@ module.exports = {
     },
     "extends": "eslint:recommended",
     "ignorePatterns": [
-        "node_modules/**/*"
+        "node_modules/**/*",
+        "src/public/*"
     ],
     "parserOptions": {
         "ecmaVersion": "latest"

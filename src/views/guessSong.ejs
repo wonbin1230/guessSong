@@ -383,10 +383,12 @@
         $scope.init = function () {
             readSongAll()
                 .then(res => {
+                    console.log(res.data.data);
                     $scope.gridOptions.data = res.data.data;
                     $scope.UIgridApi.core.refresh(); // 重整Grid資料
                 })
-                .catch(error => {
+                .catch(err => {
+                    console.log(err);
                     alert("資料獲取失敗")
                 })
             // axios.get("http://192.168.10.20:3000/song").then(res => {
