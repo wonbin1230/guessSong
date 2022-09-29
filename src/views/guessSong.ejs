@@ -4,91 +4,6 @@
 <head>
     <%- include('layout') %>
 </head>
-<style>
-    body {
-        background-image: url('/images/bg.jpg');
-        background-position: top center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: fixed;
-        background-color: black;
-        color: white;
-        font-family: Microsoft JhengHei;
-        font-weight: 1000;
-    }
-
-    .flex {
-        display: flex;
-        justify-content: space-between;
-        margin-left: 7px;
-    }
-
-    .flexTime {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        height: 150px;
-        margin-left: 7px;
-    }
-
-    .gridFlex {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 10px;
-    }
-
-    .row {
-        width: 650px;
-    }
-
-    .bb {
-        padding-bottom: 20px;
-        border-bottom: 3px solid white;
-    }
-
-    .redStar:after {
-        content: "＊";
-        color: red;
-    }
-
-    .areaColor,
-    area {
-        background-color: rgb(226, 226, 226);
-    }
-
-    button {
-        width: 150px;
-    }
-
-    a,
-    a:hover {
-        text-decoration: none
-    }
-
-    .myGrid {
-        margin: 10px 0 0 10px;
-        width: 1900px;
-        height: 580px;
-        color: black;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .ui-grid-pager-panel {
-        color: white;
-    }
-
-    input[type="time"]::-webkit-calendar-picker-indicator {
-        display: none;
-    }
-
-    input[type="time"]::-webkit-datetime-edit-ampm-field {
-        display: none;
-    }
-</style>
 
 <body>
     <%-include ('loadingDiv') %>
@@ -99,11 +14,11 @@
                         <div class="col-10 bb">
                             <label for="ytLink" class="form-label redStar">影片網址</label>
                             <input type="text" class="form-control" id="ytLink"
-                                placeholder="https://www.youtube.com/watch?v=xE1jI6vShSQ">
+                                placeholder="https://www.youtube.com/watch?v=KKsioz-zaZY">
                         </div>
                         <div class="col-10 bb">
                             <label for="songTitle" class="form-label redStar">歌曲名稱</label>
-                            <input type="text" class="form-control" id="songTitle" placeholder="最偉大的作品">
+                            <input type="text" class="form-control" id="songTitle" placeholder="說了再見">
                         </div>
                         <div class="col-8 bb">
                             <label for="theme" class="form-label">戲劇/電影</label>
@@ -116,7 +31,6 @@
                         <div class="col-2 bb">
                             <label for="gender" class="form-label redStar">種類</label>
                             <select id="gender" class="form-select">
-                                <option></option>
                                 <option>男</option>
                                 <option>女</option>
                                 <option>團體</option>
@@ -125,7 +39,6 @@
                         <div class="col-2 bb">
                             <label for="songLanguage" class="form-label redStar">語系</label>
                             <select id="songLanguage" class="form-select">
-                                <option></option>
                                 <option>華</option>
                                 <option>台</option>
                                 <option>韓</option>
@@ -205,7 +118,7 @@
                             試聽
                         </button>
                     </div>
-                    <div>
+                    <div class="btnQuest">
                         <button type="button" class="btn btn-info" onclick="testValues()">測試資料</button>
                         <button type="button" class="btn btn-primary" onclick="createSong()">送出並試聽</button>
                         <button type="reset" class="btn btn-danger"
@@ -383,7 +296,6 @@
         $scope.init = function () {
             readSongAll()
                 .then(res => {
-                    console.log(res.data.data);
                     $scope.gridOptions.data = res.data.data;
                     $scope.UIgridApi.core.refresh(); // 重整Grid資料
                 })
@@ -391,11 +303,6 @@
                     console.log(err);
                     alert("資料獲取失敗")
                 })
-            // axios.get("http://192.168.10.20:3000/song").then(res => {
-            //     $scope.gridOptions.data = res.data.data;
-            //     $scope.UIgridApi.core.refresh(); // 重整Grid資料
-            //     console.log($scope.gridOptions.data);
-            // });
         };
 
         $scope.applyDeleteSong = function (row) {
@@ -410,7 +317,6 @@
                         location.reload();
                         return alert("刪除成功！")
                     } else {
-                        console.log(res);
                         return alert(res.data.msg)
                     }
                 })
@@ -424,7 +330,6 @@
     function getVal() {
         const getVal = {};
         const $inputs = $(".form-control,.form-select");
-        console.log($inputs);
         $inputs.each(function (index) {
             if (this.value && this.value !== "") {
                 if (this.id.includes("Start")) {
@@ -555,7 +460,6 @@
             await axios.post("http://192.168.10.20:3000/song/apply", {
                 ytID: $("#ytID").val()
             }).then(res => {
-                console.log(res);
                 if (res.data.code === 0) {
                     window.location.reload();
                     return alert("正式歌曲新增成功！")

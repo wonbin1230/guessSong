@@ -1,0 +1,88 @@
+body {
+    background-image: url('/images/bg.jpg');
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: black;
+    color: white;
+    font-family: Microsoft JhengHei;
+    font-weight: 1000;
+    width: 1920px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 7px;
+}
+
+.flexTime {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 150px;
+    margin-left: 7px;
+}
+
+.gridFlex {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}
+
+.row {
+    width: 650px;
+}
+
+.bb {
+    padding-bottom: 20px;
+    border-bottom: 3px solid white;
+}
+
+.redStar:after {
+    content: "＊";
+    color: red;
+}
+
+.areaColor,
+area {
+    background-color: rgb(226, 226, 226);
+}
+
+button {
+    width: 150px;
+}
+
+a,
+a:hover {
+    text-decoration: none
+}
+
+.btnQuest {
+    margin-right: 10px;
+}
+
+.myGrid {
+    margin: 10px 0 0 10px;
+    width: 1900px;
+    height: 580px;
+    color: black;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.ui-grid-pager-panel {
+    color: white;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+input[type="time"]::-webkit-datetime-edit-ampm-field {
+    display: none;
+}
