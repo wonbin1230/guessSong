@@ -36,10 +36,18 @@ module.exports.login = async function (req, res, next) {
         const userinfo = await axios(axiosConfig);
 
         const decodeUserInfo = jwtDecode(userinfo.data.id_token);
-        //TODO: 判斷email 是否在Mongo內 不在就踢 在就回主頁
-        console.log(decodeUserInfo);
         req.session.userInfo = decodeUserInfo;
-        res.redirect("/song/main");
+        // 判斷email 是否在ENV內 不在就笑死 在就回主頁
+        for (const key in env.loginEmail) {
+            if (req.session.userInfo.email === env.loginEmail[key]) {
+                env.loginEmail = env.loginEmail[key];
+            }
+        }
+        if (req.session.userInfo.email === env.loginEmail) {
+            res.redirect("/song/main");
+        } else {
+            res.send("笑死你沒有權限！");
+        }
     } catch (err) {
         console.log(err);
         next(err);

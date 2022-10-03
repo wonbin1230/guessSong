@@ -1,5 +1,5 @@
 const apiUrl = axios.create({
-  baseUrl: "http://192.168.10.20:3000",
+  baseUrl: "http://127.0.0.1:3000",
   headers: { "Content-Type": "application/json" },
   timeout: 20000
 });
@@ -71,14 +71,35 @@ const apiPath = {
   readSong: "/song/read",
   createSong: "/song",
   deleteSong: "/song",
-  //readSampleSong: `/song/sample?ytID=${ytID}&paragraph=${paragraph}&fileFormat=mp3`,
   applyAddSong: "/song/apply",
 };
 
-const readSongAll = () => {
+// 讀取歌曲列表
+const readSongAllApi = () => {
   return apiServer("get", apiPath.readSongAll);
 };
 
-// const applyAddSong = (_id) => {
-//   return apiServer("delete", apiPath.deleteSong, _id);
-// };
+// 刪除正式歌曲
+const applyDeleteSongApi = (_id) => {
+  return apiServer("delete", apiPath.applyDeleteSong, _id);
+};
+
+// 檢查ytLink有無重複
+const readSongByytIDApi = (ytLink) => {
+  return apiServer("post", apiPath.readSongByytID, ytLink)
+};
+
+// 取資料建立試聽
+const createSongApi = (songVal) => {
+  return apiServer("post", apiPath.createSong, songVal)
+};
+
+// 取ytID刪除暫存檔
+const auditionDeleteApi = (ytID) => {
+  return apiServer("delete", apiPath.deleteSong, ytID)
+};
+
+// 將試聽後歌曲送入DB
+const applyAddSongApi = (ytID) => {
+  return apiServer("post", apiPath.applyAddSong, ytID)
+};
