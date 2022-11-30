@@ -65,12 +65,12 @@ function apiServer(method, url, data = null, config) {
 }
 
 const apiPath = {
-  readSongAll: "/song",
+  readSongAll: "/song/",
   applyDeleteSong: "/song/apply",
   readSongByytID: "/song/read",
   readSong: "/song/read",
-  createSong: "/song",
-  deleteSong: "/song",
+  createSong: "/song/",
+  deleteSong: "/song/",
   applyAddSong: "/song/apply",
 };
 
