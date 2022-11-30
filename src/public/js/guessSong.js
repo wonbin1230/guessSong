@@ -202,7 +202,7 @@ $("#ytLink").blur(async function () {
 // 檢查歌手名稱+歌曲名稱
 $("#singerName, #songTitle").blur(async function () {
     if ($("#singerName").val() && $("#songTitle").val()) {
-        await axios.get("http://192.168.10.20:3000/song/read", {
+        await axios.get("/song/read", {
             params: {
                 singerName: $("#singerName").val(),
                 songTitle: $("#songTitle").val()
