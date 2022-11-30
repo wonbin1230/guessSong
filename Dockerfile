@@ -1,4 +1,4 @@
-ROM node:16
+FROM node:16
 RUN mkdir -p /projects/guessSong
 COPY . /projects/guessSong
 WORKDIR /projects/guessSong
