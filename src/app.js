@@ -27,7 +27,7 @@ app.use(session({
     resave: true
 }));
 
-app.use("/", mainRoute);
+app.use("/songMain", mainRoute);
 app.use("/song", songRoute);
 
 // error handler
