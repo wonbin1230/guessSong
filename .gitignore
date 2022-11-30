@@ -1,2 +1,4 @@
 node_modules
 env.js
+**src/public/audio/*
+!**src/public/audio/tmp.txt
