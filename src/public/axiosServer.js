@@ -1,5 +1,5 @@
 const apiUrl = axios.create({
-  baseUrl: "http://127.0.0.1:3000",
+  baseUrl: "/song",
   headers: { "Content-Type": "application/json" },
   timeout: 20000
 });

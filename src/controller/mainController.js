@@ -38,16 +38,11 @@ module.exports.login = async function (req, res, next) {
         const decodeUserInfo = jwtDecode(userinfo.data.id_token);
         req.session.userInfo = decodeUserInfo;
         // 判斷email 是否在ENV內 不在就笑死 在就回主頁
-        for (const key in env.loginEmail) {
-            if (req.session.userInfo.email === env.loginEmail[key]) {
-                env.loginEmail = env.loginEmail[key];
-            }
+        const emailAuth = Object.values(env.loginEmail).find(x => x === decodeUserInfo.email);
+        if (!emailAuth) {
+            return res.send("笑死你沒有權限！");
         }
-        if (req.session.userInfo.email === env.loginEmail) {
-            res.redirect("/song/main");
-        } else {
-            res.send("笑死你沒有權限！");
-        }
+        res.redirect("/song/main");
     } catch (err) {
         console.log(err);
         next(err);
