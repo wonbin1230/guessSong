@@ -1,6 +1,6 @@
 FROM node:16
 RUN mkdir -p /projects/guessSong
-COPY . /projects/guessSong
+COPY ./put.sh /projects/guessSong
 WORKDIR /projects/guessSong
 ENV TZ=Asia/Taipei
 RUN npm i pm2 -g
