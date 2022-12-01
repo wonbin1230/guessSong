@@ -1,4 +1,4 @@
 docker rm guessSong -f
 docker rmi guesssong
 docker build -t guesssong /projects/guessSong
-docker run -v /projects/guessSong:/projects/guessSong -d -p 3001:3000 -e TZ=Asia/Taipei --name guessSong --restart always guesssong
+docker run -v /projects/guessSong/src:/projects/guessSong/src -d -p 3001:3000 -e TZ=Asia/Taipei --name guessSong --restart always guesssong

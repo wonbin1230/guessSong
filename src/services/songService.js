@@ -7,7 +7,7 @@ const ffmpeg = require("fluent-ffmpeg");
 const ytdl = require("ytdl-core");
 const moment = require("moment");
 const mv = require("mv");
-const env = require("../../env");
+const env = require("../env");
 
 module.exports.readAll = async function () {
     const songInfo = await songDao.readAll();

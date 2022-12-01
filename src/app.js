@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 // const helmet = require("helmet");
 const cors = require("cors");
-const env = require("../env");
+const env = require("./env");
 
 const mainRoute = require("./routes/mainRoute");
 const songRoute = require("./routes/songRoute");

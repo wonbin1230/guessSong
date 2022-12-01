@@ -1,4 +1,4 @@
-const env = require("../../env");
+const env = require("../env");
 const axios = require("axios");
 const jwtDecode = require("jwt-decode");
 
