@@ -8,8 +8,7 @@ const splitService = {
             if (splitService.row[body.ytID].exp + (1 * 60 * 1000) > +new Date) {
                 return splitService.row[body.ytID];
             } else {
-                const audioPath = path.join(__dirname, "../public/audio", body.ytID);
-                fs.rmSync(audioPath, { recursive: true });
+                splitService.delete(body.ytID);
             }
         }
         splitService.row[body.ytID] = body;
@@ -25,6 +24,8 @@ const splitService = {
     },
     delete(ytID) {
         delete splitService.row[ytID];
+        const audioPath = path.join(__dirname, "../public/audio", ytID);
+        fs.rmSync(audioPath, { recursive: true });
         return;
     }
 };

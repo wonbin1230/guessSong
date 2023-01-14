@@ -118,8 +118,6 @@ module.exports.updateSong = async function (body) {
 module.exports.deleteSong = async function (query) {
     const songInfo = Object.assign({}, splitService.read(query.ytID));
     splitService.delete(query.ytID);
-    const audioPath = path.join(__dirname, "../public/audio", query.ytID);
-    fs.rmSync(audioPath, { recursive: true });
     return new resModel(songInfo);
 };
 
