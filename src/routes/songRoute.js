@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const songController = require("../controller/songController");
+const mainController = require("../controller/mainController");
 const loginAuth = require("../middlewares/loginAuth");
+
+router.route("/login")
+  .get(mainController.login);
 
 router.all("/*", [loginAuth.loginAuth], (req, res, next) => {
   next();

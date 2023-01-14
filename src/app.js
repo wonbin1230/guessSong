@@ -2,15 +2,11 @@ const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const path = require("path");
-// const helmet = require("helmet");
 const cors = require("cors");
 const env = require("./env");
-
-const mainRoute = require("./routes/mainRoute");
 const songRoute = require("./routes/songRoute");
 const app = express();
 
-// app.use(helmet());
 app.use(cors());
 app.options("*", cors());
 app.use(express.json());
@@ -27,7 +23,6 @@ app.use(session({
     resave: true
 }));
 
-app.use("/songMain", mainRoute);
 app.use("/song", songRoute);
 
 // error handler

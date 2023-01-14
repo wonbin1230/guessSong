@@ -5,7 +5,7 @@ const jwtDecode = require("jwt-decode");
 module.exports.login = async function (req, res, next) {
     try {
         if (req.session.userInfo) {
-            return res.render("guessSong", { title: "GuessSongs" });
+            return res.redirect("/song/main");
         }
 
         const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
