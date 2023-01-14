@@ -25,7 +25,9 @@ const splitService = {
     delete(ytID) {
         delete splitService.row[ytID];
         const audioPath = path.join(__dirname, "../public/audio", ytID);
-        fs.rmSync(audioPath, { recursive: true });
+        if (fs.existsSync(audioPath)) {
+            fs.rmSync(audioPath, { recursive: true });
+        }
         return;
     }
 };
