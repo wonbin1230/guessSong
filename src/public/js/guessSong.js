@@ -18,6 +18,7 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
         multiSelect: false, // 多選
         noUnselect: true, // 能否不選
         minimumColumnSize: 100, // 欄位最小寬度
+        rowHeight: 50,
         data: [],
         columnDefs: [
             {
@@ -59,67 +60,43 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
                 field: 'intro',
                 displayName: '前奏',
                 headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
-                        <span style="color: green;">{{COL_FIELD.begin}}</span>
-                        <span style="color: red;">{{COL_FIELD.end}}</span>
-                    </div>`
+                width: 200,
+                cellTemplate: 'gridCellParagraphHtml/intro'
             },
             {
                 field: 'verse',
                 displayName: '主歌',
                 headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
-                        <span style="color: green;">{{COL_FIELD.begin}}</span>
-                        <span style="color: red;">{{COL_FIELD.end}}</span>
-                    </div>`
+                width: 200,
+                cellTemplate: 'gridCellParagraphHtml/verse'
             },
             {
                 field: 'preChorus',
                 displayName: '導歌',
                 headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
-                        <span style="color: green;">{{COL_FIELD.begin}}</span>
-                        <span style="color: red;">{{COL_FIELD.end}}</span>
-                    </div>`
+                width: 200,
+                cellTemplate: 'gridCellParagraphHtml/preChorus'
             },
             {
                 field: 'chorus',
                 displayName: '副歌',
                 headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
-                        <span style="color: green;">{{COL_FIELD.begin}}</span>
-                        <span style="color: red;">{{COL_FIELD.end}}</span>
-                    </div>`
+                width: 200,
+                cellTemplate: 'gridCellParagraphHtml/chorus'
             },
             {
                 field: 'bridge',
                 displayName: 'Bridge',
                 headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
-                        <span style="color: green;">{{COL_FIELD.begin}}</span>
-                        <span style="color: red;">{{COL_FIELD.end}}</span>
-                    </div>`
+                width: 200,
+                cellTemplate: 'gridCellParagraphHtml/bridge'
             },
             {
                 field: 'outro',
                 displayName: '尾奏',
                 headerCellClass: 'text-center',
-                width: 150,
-                cellTemplate:
-                    `<div class="ui-grid-cell-contents gridFlex">
-                        <span style="color: green;">{{COL_FIELD.begin}}</span>
-                        <span style="color: red;">{{COL_FIELD.end}}</span>
-                    </div>`
+                width: 200,
+                cellTemplate: 'gridCellParagraphHtml/outro'
             },
             {
                 field: '_id',
@@ -128,7 +105,9 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
                 width: 120,
                 cellClass: 'text-center',
                 cellTemplate:
-                    `<button type="button" class="btn btn-danger" ng-click='grid.appScope.applyDeleteSong(row)' style="width: 100px; height: 30px">刪除</button>`
+                    `<div class="ui-grid-cell-contents gridFlex">
+                        <button type="button" class="btn btn-danger" ng-click='grid.appScope.applyDeleteSong(row)' style="width: 100px;">刪除</button>
+                    </div>`
             },
 
         ],
@@ -159,6 +138,19 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
         } else {
             return alert("不刪還按，調皮(◔⊖◔)つ")
         }
+    }
+
+    // 試聽Grid裡的歌
+    $scope.auditionGrid = function (row, paragraph) {
+        const ytID = row.entity.ytID
+        const audioURL = `/song/getSong/${ytID}/${paragraph}`
+        let html = `
+            <audio controls autoplay>
+                <source src="${audioURL}" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>`
+        $("audio").remove();
+        $(".playerGrid").append(html)
     }
 });
 
@@ -228,6 +220,7 @@ async function createSong() {
         await createSongApi(songVal)
             .then(res => {
                 if (res.data.code === 0) {
+                    $("#createSongModel").hide();
                     $("#ytID").val(res.data.data);
                     $("#staticBackdrop").modal("show");
                     $("#auditionBtn").show();
@@ -256,10 +249,7 @@ async function auditionDelete() {
             await auditionDeleteApi({ ytID: ytID })
                 .then(res => {
                     if (res.data.code === 0) {
-                        $("#ytID").val("")
-                        $("#staticBackdrop").modal("hide");
-                        $("#auditionBtn").hide();
-                        $('audio').remove()
+                        window.location.reload();
                         return alert("刪除成功！")
                     } else {
                         return alert(res.data.msg)

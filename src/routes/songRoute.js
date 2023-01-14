@@ -28,4 +28,10 @@ router.route("/apply")
 router.route("/sample")
   .get(songController.readSampleSong);
 
+router.route("/getSong/:ytID/:paragraph")
+  .get(songController.getSong);
+
+router.route("/gridCellParagraphHtml/:paragraph")
+  .get(songController.gridCellParagraphHtml);
+
 module.exports = router;

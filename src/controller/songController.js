@@ -1,8 +1,9 @@
 const songModel = require("../models/view/songModel");
 const songService = require("../services/songService");
+const env = require("../env");
+const errModel = require("../models/errModel");
 const fs = require("fs");
 const path = require("path");
-const errModel = require("../models/errModel");
 
 module.exports.createSong = async function (req, res, next) {
     try {
@@ -115,10 +116,44 @@ module.exports.readSampleSong = async function (req, res, next) {
         if (!fs.existsSync(audioPath)) {
             throw new errModel(2, "此ytID資料夾不存在");
         }
-        const filePath = path.join(audioPath, `${req.query.paragraph}.${req.query.fileFormat}`);
+        const filePath = path.join(audioPath, `${req.query.paragraph}.mp3`);
 
-        res.setHeader("Content-Type", "audio/mp4");
+        res.setHeader("Content-Type", "audio/mp3");
         fs.createReadStream(filePath).pipe(res);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.getSong = async function (req, res, next) {
+    try {
+        const { error: joiErr } = songModel.getSong.validate(req.params);
+        if (joiErr) {
+            throw new errModel(1, joiErr.message);
+        }
+        const filePath = path.join(env.audioFolder, req.params.ytID, `${req.params.paragraph}.mp3`);
+        res.setHeader("Content-Type", "audio/mp3");
+        fs.createReadStream(filePath).pipe(res);
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.gridCellParagraphHtml = async function (req, res, next) {
+    try {
+        const { error: joiErr } = songModel.gridCellParagraphHtml.validate(req.params);
+        if (joiErr) {
+            throw new errModel(1, joiErr.message);
+        }
+        const html = `
+        <div class="ui-grid-cell-contents gridFlex" ng-if="row.entity.${req.params.paragraph}.begin.length > 0">
+            <button type="button" class="btn btn-primary" ng-click='grid.appScope.auditionGrid(row, "${req.params.paragraph}")'
+                style="width: 60px;">試聽</button>
+            <span style="color: green;">{{COL_FIELD.begin}}</span>
+            <span style="color: red;">{{COL_FIELD.end}}</span>
+        </div>`;
+        res.setHeader("Content-type", "text/html");
+        res.send(html);
     } catch (err) {
         next(err);
     }

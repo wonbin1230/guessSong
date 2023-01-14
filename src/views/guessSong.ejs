@@ -111,16 +111,16 @@
                     </div>
                 </div>
                 <div class="flex" style="margin: 20px 0;">
-                    <div style="margin-left: 10px;">
+                    <div class="playerGrid"></div>
+                    <div class="btnQuest">
                         <input type="text" id="ytID" style="display: none;">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop" style="display: none;" id="auditionBtn">
+                        <button type="button" class="btn btn-info" onclick="testValues()">測試資料</button>
+                        <button type="button" style="display: none;" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" id="auditionBtn">
                             試聽
                         </button>
-                    </div>
-                    <div class="btnQuest">
-                        <button type="button" class="btn btn-info" onclick="testValues()">測試資料</button>
-                        <button type="button" class="btn btn-primary" onclick="createSong()">送出並試聽</button>
+                        <button type="button" id="createSongModel" class="btn btn-primary"
+                            onclick="createSong()">送出並試聽</button>
                         <button type="reset" class="btn btn-danger"
                             onclick='$(".form-control,.form-select").val("")'>清除輸入資料</button>
                     </div>

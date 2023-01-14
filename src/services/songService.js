@@ -110,29 +110,6 @@ async function splitSongMP3(ytID, key, filePath) {
     });
 }
 
-// async function splitSongMP3(ytID, key, time, filePath) {
-//     const audioPath = path.join(__dirname, "../public/audio", ytID);
-//     fs.mkdirSync(audioPath, { recursive: true });
-//     const newFilePath = path.join(audioPath, `${key}.mp3`);
-
-//     const begin = moment(`2022-01-01 00:${time.begin}`);
-//     const end = moment(`2022-01-01 00:${time.end}`);
-//     time.duration = end.diff(begin, "s");
-//     splitService.addDuration(ytID, key, time);
-
-//     return new Promise((resolve) => {
-//         ffmpeg(filePath)
-//             .seekInput(time.begin)
-//             .duration(time.duration)
-//             .audioCodec("libmp3lame")
-//             .save(newFilePath)
-//             .on("end", () => {
-//                 console.log(`${ytID} ${key} MP3 Split End`);
-//                 resolve();
-//             });
-//     });
-// }
-
 module.exports.updateSong = async function (body) {
     const songInfo = await songDao.updateSong(body);
     return new resModel(songInfo);

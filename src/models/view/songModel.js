@@ -111,6 +111,16 @@ const applyAddSong = joi.object().keys({
 const applyDeleteSong = joi.object().keys({
     _id
 });
+
+const getSong = joi.object().keys({
+    ytID: ytID.required(),
+    paragraph,
+});
+
+const gridCellParagraphHtml = joi.object().keys({
+    paragraph,
+});
+
 module.exports = {
     createSong,
     readSong,
@@ -119,5 +129,7 @@ module.exports = {
     deleteSong,
     readSampleSong,
     applyAddSong,
-    applyDeleteSong
+    applyDeleteSong,
+    getSong,
+    gridCellParagraphHtml
 };
