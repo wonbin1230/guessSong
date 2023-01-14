@@ -65,13 +65,13 @@ function apiServer(method, url, data = null, config) {
 }
 
 const apiPath = {
-  readSongAll: "/song/",
-  applyDeleteSong: "/song/apply",
-  readSongByytID: "/song/read",
-  readSong: "/song/read",
-  createSong: "/song/",
-  deleteSong: "/song/",
-  applyAddSong: "/song/apply",
+  readSongAll: "/guessSong/",
+  applyDeleteSong: "/guessSong/apply",
+  readSongByytID: "/guessSong/read",
+  readSong: "/guessSong/read",
+  createSong: "/guessSong/",
+  deleteSong: "/guessSong/",
+  applyAddSong: "/guessSong/apply",
 };
 
 // 讀取歌曲列表

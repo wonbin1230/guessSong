@@ -23,7 +23,7 @@ app.use(session({
     resave: true
 }));
 
-app.use("/song", songRoute);
+app.use("/guessSong", songRoute);
 
 // error handler
 const resModel = require("./models/resModel");

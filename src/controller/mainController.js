@@ -5,7 +5,7 @@ const jwtDecode = require("jwt-decode");
 module.exports.login = async function (req, res, next) {
     try {
         if (req.session.userInfo) {
-            return res.redirect("/song/main");
+            return res.redirect("/guessSong/main");
         }
 
         const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
@@ -14,7 +14,7 @@ module.exports.login = async function (req, res, next) {
         const code = params.get("code");
 
         if (!code) {
-            return res.redirect("/song/main");
+            return res.redirect("/guessSong/main");
         }
 
         const data = new URLSearchParams();
@@ -42,7 +42,7 @@ module.exports.login = async function (req, res, next) {
         if (!emailAuth) {
             return res.send("笑死你沒有權限！");
         }
-        res.redirect("/song/main");
+        res.redirect("/guessSong/main");
     } catch (err) {
         console.log(err);
         next(err);

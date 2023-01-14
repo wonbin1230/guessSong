@@ -143,7 +143,7 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
     // 試聽Grid裡的歌
     $scope.auditionGrid = function (row, paragraph) {
         const ytID = row.entity.ytID
-        const audioURL = `/song/getSong/${ytID}/${paragraph}`
+        const audioURL = `/guessSong/getSong/${ytID}/${paragraph}`
         let html = `
             <audio controls autoplay>
                 <source src="${audioURL}" type="audio/mp3">
@@ -194,7 +194,7 @@ $("#ytLink").blur(async function () {
 // 檢查歌手名稱+歌曲名稱
 $("#singerName, #songTitle").blur(async function () {
     if ($("#singerName").val() && $("#songTitle").val()) {
-        await axios.get("/song/read", {
+        await axios.get("/guessSong/read", {
             params: {
                 singerName: $("#singerName").val(),
                 songTitle: $("#songTitle").val()
@@ -263,7 +263,7 @@ async function auditionDelete() {
 function audition(type) {
     let paragraph = type;
     let ytID = $("#ytID").val();
-    const audioURL = `/song/sample?ytID=${ytID}&paragraph=${paragraph}&fileFormat=mp3`
+    const audioURL = `/guessSong/sample?ytID=${ytID}&paragraph=${paragraph}&fileFormat=mp3`
     let html = `
         <audio controls autoplay>
             <source src="${audioURL}" type="audio/mp3">
