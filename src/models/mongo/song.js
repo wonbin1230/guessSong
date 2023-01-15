@@ -19,7 +19,7 @@ const songDoc = new Mongoose.Schema({
     songLanguage: { type: String, required: true },
     theme: String,
     year: Number,
-    intro: { type: timeDoc, required: true },
+    intro: timeDoc,
     verse: { type: timeDoc, required: true },
     preChorus: timeDoc,
     chorus: { type: timeDoc, required: true },
