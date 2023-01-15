@@ -6,8 +6,8 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
     $scope.lang = 'zh-tw';
 
     $scope.gridOptions = {
-        paginationPageSizes: [10, 25, 50, 75],
-        paginationPageSize: 15,
+        paginationPageSizes: [10, 30, 50, 100],
+        paginationPageSize: 10,
         enableSorting: true, // 排序
         enableFiltering: true, // 篩選
         enableGridMenu: true, // Grid選單選項
@@ -45,6 +45,15 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
             {
                 field: 'gender',
                 displayName: '種類',
+                filter: {
+                    type: uiGridConstants.filter.SELECT,
+                    selectOptions: [
+                        { value: '男', label: '男' },
+                        { value: '女', label: '女' },
+                        { value: '團體', label: '團體' },
+                        { value: '合唱', label: '合唱' }
+                    ]
+                },
                 headerCellClass: 'text-center',
                 width: 85,
                 cellClass: 'text-center'
@@ -52,6 +61,17 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
             {
                 field: 'songLanguage',
                 displayName: '語系',
+                filter: {
+                    type: uiGridConstants.filter.SELECT,
+                    selectOptions: [
+                        { value: '華', label: '華' },
+                        { value: '台', label: '台' },
+                        { value: '韓', label: '韓' },
+                        { value: '英', label: '英' },
+                        { value: '日', label: '日' },
+                        { value: '粵', label: '粵' }
+                    ]
+                },
                 headerCellClass: 'text-center',
                 width: 85,
                 cellClass: 'text-center'
@@ -59,6 +79,7 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
             {
                 field: 'intro',
                 displayName: '前奏',
+                enableFiltering: false,
                 headerCellClass: 'text-center',
                 width: 200,
                 cellTemplate: 'gridCellParagraphHtml/intro'
@@ -66,6 +87,7 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
             {
                 field: 'verse',
                 displayName: '主歌',
+                enableFiltering: false,
                 headerCellClass: 'text-center',
                 width: 200,
                 cellTemplate: 'gridCellParagraphHtml/verse'
@@ -73,6 +95,7 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
             {
                 field: 'preChorus',
                 displayName: '導歌',
+                enableFiltering: false,
                 headerCellClass: 'text-center',
                 width: 200,
                 cellTemplate: 'gridCellParagraphHtml/preChorus'
@@ -80,6 +103,7 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
             {
                 field: 'chorus',
                 displayName: '副歌',
+                enableFiltering: false,
                 headerCellClass: 'text-center',
                 width: 200,
                 cellTemplate: 'gridCellParagraphHtml/chorus'
@@ -87,6 +111,7 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
             {
                 field: 'bridge',
                 displayName: 'Bridge',
+                enableFiltering: false,
                 headerCellClass: 'text-center',
                 width: 200,
                 cellTemplate: 'gridCellParagraphHtml/bridge'
@@ -94,6 +119,7 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
             {
                 field: 'outro',
                 displayName: '尾奏',
+                enableFiltering: false,
                 headerCellClass: 'text-center',
                 width: 200,
                 cellTemplate: 'gridCellParagraphHtml/outro'
@@ -101,6 +127,7 @@ app.controller("Ctrl", function ($scope, $http, $filter, uiGridConstants) {
             {
                 field: '_id',
                 displayName: '刪除歌曲',
+                enableFiltering: false,
                 headerCellClass: 'text-center',
                 width: 120,
                 cellClass: 'text-center',
